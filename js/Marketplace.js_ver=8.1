@@ -1,0 +1,349 @@
+var marketPlaceOwner="";
+
+function refreshMarketplace(){
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+	function(v,callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+			var t = new Array();
+			if(!error){
+				console.log(result.length);
+				for(i=0;i<result.length;i++)
+					{
+						t[i]=result[i].c;
+						console.log(t[i]);
+					}
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+ 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens.length+" Tokens! Owner is: "+marketPlaceOwner);
+		
+		
+		async.map(tokens, getLambosMarketplace, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	var car_tml="<p>";
+	
+	var result_json = [];
+	//var result_json_cleaned = [];
+	//init result_json
+	//for(var i=0;i<result.length;i++)
+	//	{
+
+	//		result_json[i]=JSON.parse(JSON.stringify(json_LamboInit));
+	//	}
+	
+		for(i=0,j=0;i<result.length;i++)
+			{
+			
+	
+				//Build JSON Return:
+				if(result[i][3]!=marketPlaceOwner)
+				{
+				result_json[j]=JSON.parse(JSON.stringify(json_LamboInit));
+				console.log("rCP: ASSIGN OBJECT: i: "+i);
+			
+				result_json[j]= JSON.parse(JSON.stringify(showLambo(result[i][0],result[i][4],0)));
+				result_json[j].token_id=result[i][1];
+				result_json[j].seller=result[i][3];
+				result_json[j].price=result[i][2];
+				result_json[j].tune_options=JSON.parse(JSON.stringify(showTuningKits(result[i][0],result[i][4]))).tune_options;
+				console.log("result_Lambo["+j+"]:");
+				console.log(JSON.stringify(result_json[j]));
+				j++;
+				}
+			
+			}
+		console.log("BEFORE RETURN");	
+		
+		var ret_val=JSON.stringify(result_json);
+		
+		DisplayCarsMarketplace(result_json);
+	
+});
+}
+
+
+var getLambosMarketplace = function (t, doneCallback) {
+  // Call back with no error and the result of num * num
+	var lm = [];
+	
+	async.waterfall([
+		function(callback){
+			EtherLambos.getLambo(t,(error,resultLambo) => { 
+				if(!error){
+					lm[0]=new BigNumber(resultLambo[1]);
+					lm[1]=t;
+				}
+				else{
+					console.log(error);
+				}
+				callback(null, t);
+			});
+			
+		},
+		function(t,callback){
+			EtherLambos.getLamboModel(t,(error,resultLamboModel) => { 
+				if(!error){
+					lm[4]=resultLamboModel;
+				}
+				else{
+					console.log(error);
+				}
+				callback(null, t);
+			});
+			
+		},
+		function(t,callback){
+			
+			Marketplace.getSale(t,(error,resultSale) => { 
+							if(!error){
+								console.log(" price:"+resultSale[1]+" seller:"+resultSale[0]);
+								var r = [];
+								
+								lm[2]=new BigNumber(resultSale[1]);
+								lm[3]=resultSale[0];
+								console.log(lm);
+								return doneCallback(null, lm);
+							}
+							else{
+								console.log(error);
+							}
+						});
+		},
+		], function (err, result) {
+			return doneCallback(null, result);
+		});
+
+};
+
+var getCurrentPrice = function (t, doneCallback) {
+  // Call back with no error and the result of num * num
+	
+	Marketplace.getCurrentPrice(t,(error,result) => { 
+		if(!error){
+			console.log(result[0].c);
+			return doneCallback(null, result[0].c);
+		}
+		else{
+			console.log(error);
+		}
+	});
+
+};
+
+function buyCar(token,price){
+		console.log("Token Price: "+price);
+		console.log("Token Selected: "+token);
+		//var towei=web3.toWei(document.getElementById('sellPrice').value, 'ether');
+		//console.log("Token Price in Wei: "+towei);
+		//$("#loader-buy").show();
+		if(Web3Status==1)
+			{
+		    Marketplace.bid(token,{from: acc, gasPrice: gPrice,gas: g, value: price}, (err,res) => {
+		    	if(err){
+		    		//$("#loader").hide();
+					console.log(err);
+		    	}
+				else{
+				modal.style.display = "none";
+				}
+		    });
+			}
+		else
+		{
+			//alert("Please Log in to Metamask");
+			modal_mm.style.display = "block";
+		}
+	}
+function buyCarReferral(token,price,code){
+		console.log("Token Price: "+price);
+		console.log("Token Selected: "+token);
+		
+		if(Web3Status==1)
+			{
+				//GET CODE->
+				//var code=0;
+				//var id="buyReferral_"+i;
+				//code=document.getElementById(id).value;
+				console.log("Code: "+code);
+				//var towei=web3.toWei(document.getElementById('sellPrice').value, 'ether');
+				//console.log("Token Price in Wei: "+towei);
+				//$("#loader-buy").show();
+				
+		
+			    Marketplace.bidReferral(token,code,{from: acc, gasPrice: gPrice,gas: g, value: price}, (err,res) => {
+			    	if(err){
+			    		//$("#loader").hide();
+						console.log(err);
+			    	}
+					else{
+					modal.style.display = "none";
+					}
+			    });	
+			}
+		else
+		{
+			//alert("Please Log in to Metamask");
+			modal_mm.style.display = "block";
+		}
+	}
+
+function refreshMarketplaceLamboProfile(mpLambo){
+	async.waterfall([
+	 	function(callback){
+       	
+			EtherLambos.lamboIndexToOwner(mpLambo,(error,result) => { 
+				if(!error){
+					console.log("Ower: "+result+ " t: "+mpLambo);
+					var r = [];
+					r[0]=result;
+					r[1]=mpLambo;
+
+					callback(null, r);
+				
+			
+				}
+				else{
+					console.log("ERROR"+error);
+				}
+			});
+		  
+		
+	    },
+	 	function(result_owner,callback){
+       	
+			EtherLambos.getLambo(result_owner[1],(error,result_lambo) => { 
+				if(!error){
+					console.log("GET LAMBO: "+result_lambo[1].c+ " t: "+result_owner[1]);
+					var r = [];
+					r[0] = new BigNumber(result_lambo[1]); //Attributes
+					r[1]=result_owner[1]; //token_id
+					r[3]=result_owner[0]; //Owner
+			
+					EtherLambos.getLamboModel(mpLambo,(error,result_model) => { 
+						if(!error){
+							console.log("GET LAMBO MODEL: "+result_model.c);
+							var r2 = [];
+							r2[0]=r[0];
+							r2[1]=r[1];
+							r2[2]=result_model; //model
+							r2[3]=r[3];
+							//console.log(r);
+							Marketplace.getSale(mpLambo,(error,resultSale) => { 
+											if(!error){
+												console.log(" price:"+resultSale[1]+" seller:"+resultSale[0]);
+												//var r = [];
+								
+												r2[4]=new BigNumber(resultSale[1]);
+												r2[5]=resultSale[0];
+												console.log(r2);
+												//return callback(null,r2);
+												callback(null, r2);
+											}
+											else{
+												console.log(error);
+											}
+										});
+							
+						}
+						else{
+							console.log("ERROR"+error);
+						}
+					});
+			
+				}
+				else{
+					console.log("ERROR"+error);
+				}
+			});
+		  
+		
+	    },
+    
+	], function (err, result) {
+		console.log("res: "+result);  
+	   // result now equals 'done'   
+	 
+		var result_json;
+	
+			//init result_json
+		
+
+		result_json=JSON.parse(JSON.stringify(json_LamboInit));
+		
+	
+		if(result[1]!=0&&result[0]!=0)
+			{
+			
+	
+						//Build JSON Return:
+			
+				console.log("rCP: ASSIGN OBJECT: ");
+			
+				result_json= JSON.parse(JSON.stringify(showLambo(result[0],result[2],0)));
+				result_json.token_id=result[1];
+				result_json.owner=result[3];
+				result_json.price=result[4];
+				result_json.seller=result[5];
+				console.log(result_json.owner);
+				result_json.tune_options=JSON.parse(JSON.stringify(showTuningKits(result[0],result[2]))).tune_options;
+				console.log("result_Lambo:");
+				console.log(JSON.stringify(result_json));
+
+	
+			}
+		console.log("BEFORE RETURN");	
+
+		var ret_val=JSON.stringify(result_json);
+
+	
+		if(result_json.length==1 && result_json[0].token_id==0)
+			{
+				DisplayCarNotFound();
+			}
+			else{
+				console.log(result_json.length+"<-l : t->"+result_json.token_id)
+				DisplayMarketplaceCarView(result_json); 
+			}
+	});
+	}

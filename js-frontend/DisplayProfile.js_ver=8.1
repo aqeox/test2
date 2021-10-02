@@ -1,0 +1,182 @@
+
+var gwidth=350;
+var gheight=200;
+var car_link='index.php?lambo=';
+
+function DisplayCarsProfile(result_json){
+	
+	var car_tml="";
+	
+	console.log("DisplayCarsProfile");
+	console.log(result_json);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	
+	
+	
+	
+	var i=0;
+	var r=result_json.length/3;
+	var columns=0;
+	
+	r=Math.round(r, 0)
+	if(result_json.length%3>0&&result_json.length>3)
+		{
+			r+=1;	
+		}
+		if(r<1)
+			r=1;
+		console.log("Rows:"+r);
+	for(var k=0;k<r;k++)
+		{
+		car_tml+="<div class='row row-centered'>";
+		
+		for(columns=0;i<result_json.length&&columns<3;i++,columns++)
+			{
+				car_tml+=" <div class='col-lg-4 col-centered'>";
+				car_tml+="<a href='"+car_link+result_json[i].token_id+"'>";
+				car_tml+="<svg width='"+gwidth+"' height='"+gheight+"'><rect id='bg' x='0' y='0' width='"+gwidth+"' height='"+gheight+"' fill='blue' opacity='0' />";
+			
+				
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+			
+						if(result_json[i].svg_components.pos[j]=="back")
+							{
+								car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+								"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+							}
+					}
+
+
+				car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+result_json[i].svg_components.base+"'/>";
+
+				//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+						if(result_json[i].svg_components.pos[j]=="front")
+							{
+								car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+								"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+							}
+					}
+				
+			
+			
+				/*car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+result_json[i].svg_components.base+"'/>";
+			
+				//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+					car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+					"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+				
+					}*/
+				car_tml+="</svg>";	
+				car_tml+="</a>";
+				car_tml+="<p class='elmain-center'>"+result_json[i].model+" no. "+result_json[i].number+"</p>";
+				//car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneButton_"+i+"' onclick='tuneCar("+result_json[i].token_id+")'>Tune Car</button></p><br>"; //
+				
+				car_tml+=" </div>";
+			}
+	    car_tml+=" </div>";
+	}
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}
+
+function DisplayCarsSaleProfile(result_json){
+	
+	var car_tml="";
+	
+	console.log("DisplayCarsSaleProfile");
+	console.log(result_json);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	
+	
+	
+	
+	var i=0;
+	var r=result_json.length/3;
+	var columns=0;
+	
+	r=Math.round(r, 0)
+	if(result_json.length%3>0&&result_json.length>3)
+		{
+			r+=1;	
+		}
+		if(r<1)
+			r=1;
+		console.log("Rows:"+r);
+		if(result_json.length>0)
+		{
+	   car_tml+=" <hr class='featurette-divider' id='CarSales' >"+
+			"<p class='elhead2-center'>For Sale</p><br>";
+			
+		}
+  
+		
+	for(var k=0;k<r;k++)
+		{
+		car_tml+="<div class='row row-centered'>";
+		
+		for(columns=0;i<result_json.length&&columns<3;i++,columns++)
+			{
+				car_tml+=" <div class='col-lg-4 col-centered'>";
+				car_tml+="<a href='"+marketplace_link_carView+result_json[i].token_id+"'>";
+				car_tml+="<svg width='"+gwidth+"' height='"+gheight+"'><rect id='bg' x='0' y='0' width='"+gwidth+"' height='"+gheight+"' fill='blue' opacity='0' />";
+			
+				
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+			
+						if(result_json[i].svg_components.pos[j]=="back")
+							{
+								car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+								"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+							}
+					}
+
+
+				car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+result_json[i].svg_components.base+"'/>";
+
+				//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+						if(result_json[i].svg_components.pos[j]=="front")
+							{
+								car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+								"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+							}
+					}
+				
+			
+			
+				/*car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+result_json[i].svg_components.base+"'/>";
+			
+				//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+					car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+					"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+				
+					}*/
+				car_tml+="</svg>";	
+				car_tml+="</a>";
+				car_tml+="<p class='elmain-center'>"+result_json[i].model+" no. "+result_json[i].number+"</p>";
+			    car_tml+="<p class='elmain-center' id='marketplacePrice' > Price: "+web3.fromWei(result_json[i].price,'ether')+" ETH</p>";
+	
+				//car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneButton_"+i+"' onclick='tuneCar("+result_json[i].token_id+")'>Tune Car</button></p><br>"; //
+				
+				car_tml+=" </div>";
+			}
+	    car_tml+=" </div>";
+	}
+	
+	console.log(car_tml);
+	$("#profileSaleView").html(car_tml);
+	
+}

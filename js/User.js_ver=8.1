@@ -1,0 +1,324 @@
+var acc="";
+//0 = not yet queried 
+//1 = Web3 Account defined -> MM Logged in 
+//2 = Web3 Account undefined -> MM not logged in 
+//3 = Web3 undefined no MM detected
+var Web3Status=0;
+var Web3ChangeStatus=0;
+
+
+async.waterfall([
+ 	function(callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+	
+		//console.log("web3 defined Account -> "+ web3.eth.accounts[0]);
+	
+		window.addEventListener('load', function() {
+
+		  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+		  
+			if (window.ethereum) {
+			        window.web3 = new Web3(ethereum);
+			        try {
+			            // Request account access if needed
+			            ethereum.enable();
+			            // Acccounts now exposed
+			            //web3.eth.sendTransaction({/* ... */});
+			        } catch (error) {
+			            // User denied account access...
+			        }
+			    }
+				console.log("after ethereum.enable");
+			    // Legacy dapp browsers...
+			   if (typeof web3 !== 'undefined') {
+		    // Use Mist/MetaMask's provider
+			  try{
+	  		    web3 = new Web3(web3.currentProvider);
+	  			console.log("web3 defined Account -> "+ web3.eth.accounts[0]);
+	  			if(web3.eth.accounts[0]==undefined)
+					{
+						Web3Status=2;  
+						console.log("Not Logged in but MM detected - WebStatus=2");
+						//Not Logged in so only initialize Contracts & get Gas Price
+				  		try{
+				  			//loadEtherLambosContractABI();
+							//loadMarketplaceContractABI();
+							//loadServiceStationContractABI();
+							initializeContracts();
+				  			getGasPrice();
+							callback(null,  1);
+				  			}
+			   		   catch(err) {
+			   		      console.log("Initializing did not work out");
+			  			  Web3Status=3;
+			
+			   		 	 }
+					}
+	  			else
+					{
+						
+						Web3Status=1;
+						console.log("Logged in MM detected - WebStatus=1");
+						// Looks good - now initialize Contracts and get account	
+						// Now you can start your app & access web3 freely:
+				  		try{
+				  			//loadEtherLambosContractABI();
+							//loadMarketplaceContractABI();
+							//loadServiceStationContractABI();
+				  			initializeContracts();
+				  			getGasPrice();
+				  			web3.eth.defaultAccount=web3.eth.accounts[0];
+				  		 	acc=web3.eth.accounts[0];
+				  		 	callback(null,  1);
+				  			}
+			   		   catch(err) {
+			   		      console.log("Initializing or Web3 Accounts could not be retrieved");
+			  			  Web3Status=3;
+			  		
+			   		 	 }
+					}
+	  				
+			  }
+			  catch(err) {
+			      console.log("Web3 is undefined");
+				  Web3Status=3;
+			  }
+			 
+		    
+		
+		  } else {
+			  console.log('No web3? You should consider trying MetaMask!');
+		    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+		   /*try{
+		    	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+				}
+		   catch(err) {
+		      console.log("Fallback to Local Node not available");
+			  //web3 = undefined;
+		 	 }*/
+				Web3Status=3;
+		  }
+
+		 callback(null,  1);
+		});
+	
+	  
+
+    },
+ 	function(n,callback){
+		network=0;
+		//if(Web3Status==1)
+		//{
+			try{
+				web3.version.getNetwork((err, netId) => {
+				  switch (netId) {
+				    case "1":
+						console.log('This is mainnet');
+				      break
+				    case "2":
+						console.log('This is the deprecated Morden test network.');
+				      break
+				    case "3":
+						console.log('This is the ropsten test network.');
+				      break
+				    case "4":
+						console.log('This is the Rinkeby test network.');
+				      break
+				    case "42":
+						console.log('This is the Kovan test network.');
+				      break
+				    default:
+						console.log('This is an unknown network.');
+				  }
+				  network=netId;
+				 callback(null, 1); 
+				});
+			}
+			catch(err)
+			{
+				console.log("Could not retrieve Network");  
+				callback(null, 1); 
+			}
+			
+		//}
+		//callback(null, 1);
+		 
+		 
+    },
+
+], function (err, result) {
+	console.log("Initializing done - Web3Status :"+Web3Status+" Network:"+network);  
+	
+	  
+	Init();
+	
+	// Now start Interval to refresh User: 
+	refreshUser();
+	
+
+});
+
+function refreshUser(){
+	
+	var initializeWeb3= setInterval(function(){ 
+	 		//console.log("Initial Load Web3Status: "+Web3Status); 
+	 	if(Web3Status==0||Web3Status==2||Web3Status==3)
+	 		{
+		
+			try{
+				InitializeWeb3();
+		
+			  }
+			  catch(err) {
+			      console.log("Initialize Web3 not successful");
+			  
+			  }
+		
+			/*if(Web3ChangeStatus==1)
+				{
+					Web3ChangeStatus=0;
+					location.reload();
+					//refresh();
+				}*/
+	 		}
+			
+		if(Web3Status==1)
+			{
+				
+				
+				/*if(Web3ChangeStatus==1)
+					{
+						Web3ChangeStatus=0;
+						location.reload();
+						//refresh();
+					}*/
+			//clearInterval(initializeWeb3);
+			//console.log("Account Change "+web3.eth.accounts[0]+"  acc="+acc); 
+			if(web3.eth.accounts[0]!=acc)
+				{
+				//console.log("Account Change "+web3.eth.accounts[0]+"  acc="+acc); 
+				web3.eth.defaultAccount=web3.eth.accounts[0];
+				acc=web3.eth.accounts[0];
+				Init();
+				//openTab(event, 'Garage');
+				}
+		
+			if(web3.eth.accounts[0]==undefined){
+				try{
+					InitializeWeb3();
+		
+				  }
+				  catch(err) {
+				      console.log("Initialize Web3 not successful");
+			  
+				  }
+				}
+		
+			}
+			try{
+				console.log("Web3Status: "+Web3Status+" Acc Ch "+web3.eth.accounts[0]+" acc="+acc); 
+		
+			  }
+			  catch(err) {
+			      console.log("Web3 Accounts not initialized");
+				  //DisplayGetMetamask();
+			  }
+	
+	 //console.log("Poll Account "+web3.eth.accounts[0]); 
+	  }, 2000);	
+}
+
+function InitializeWeb3(){
+	async.waterfall([
+    
+	 	function(callback){
+
+			  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+			  if (typeof web3 !== 'undefined') {
+			    // Use Mist/MetaMask's provider
+			    web3 = new Web3(web3.currentProvider);
+				//console.log("web3 defined Account -> "+ web3.eth.accounts[0]);
+				if(web3.eth.accounts[0]==undefined)
+					{
+						if(Web3Status!=2)
+							location.reload();
+						Web3Status=2;
+						
+					}
+				else
+					{
+						if(Web3Status!=1)
+							location.reload();
+						Web3Status=1;
+					
+					}
+			
+			  } else {
+			    console.log('No web3? You should consider trying MetaMask!')
+			    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+				  try{
+				  	//web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+				  }
+				  catch(err) {
+				      console.log("Web3 Http Provider not initialized");
+					  //DisplayGetMetamask();
+				  }
+				
+			
+				if(Web3Status!=3)
+						location.reload();
+					Web3Status=3;
+					
+			  }
+
+			  // Now you can start your app & access web3 freely:
+			 //web3.eth.defaultAccount=web3.eth.accounts[0];
+			 //acc=web3.eth.accounts[0];
+			 callback(null,  1);
+			
+		
+		  
+	
+	    },
+	 	function(n,callback){
+			if(Web3Status==1)
+			{
+				web3.version.getNetwork((err, netId) => {
+				  switch (netId) {
+				    case "1":
+						console.log('This is mainnet');
+				      break
+				    case "2":
+						console.log('This is the deprecated Morden test network.');
+				      break
+				    case "3":
+						console.log('This is the ropsten test network.');
+				      break
+				    case "4":
+						console.log('This is the Rinkeby test network.');
+				      break
+				    case "42":
+						console.log('This is the Kovan test network.');
+				      break
+				    default:
+						console.log('This is an unknown network.');
+				  }
+				  network=netId;
+				 callback(null, 1); 
+				});
+			}
+			callback(null, 1);
+			 
+			 
+	    },
+	], function (err, result) {
+		//console.log("res: "+result);  
+	   // result now equals 'done'    
+	
+		//refreshUser();
+   
+	});
+	
+}
+
+

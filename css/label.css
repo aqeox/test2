@@ -1,0 +1,119 @@
+input {
+  display: none;
+  visibility: hidden;
+}
+label {
+  display: block;
+  padding: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+}
+label:hover {
+  color: #000;
+}
+label::before {
+  font-family: Consolas, monaco, monospace;
+  font-weight: bold;
+  font-size: 15px;
+  content: "+";
+  vertical-align: text-top;
+  display: inline-block;
+  width: 20px;
+  height: 22px;
+  margin-right: 3px;
+  background: radial-gradient(ellipse at center, #CCC 50%, transparent 50%);
+}
+#expand, #expand2,#expand3, #expand4,#expand5, #expand6,#expand7,#expand8,#expand9,#expand10,#expand11,#expand12,#expand13,#expand14,#expand15{
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s;
+  color: #000;
+}
+section {
+  padding: 0 20px;
+}
+#toggle:checked ~ #expand {
+  height: 150px;
+}
+#toggle:checked ~ label::before {
+  content: "+";
+}
+#toggle2:checked ~ #expand2 {
+  height: 400px;
+}
+#toggle2:checked ~ label::before {
+  content: "+";
+}
+#toggle3:checked ~ #expand3 {
+  height: 300px;
+}
+#toggle3:checked ~ label::before {
+  content: "+";
+}
+#toggle4:checked ~ #expand4 {
+  height: 100px;
+}
+#toggle4:checked ~ label::before {
+  content: "+";
+}
+#toggle5:checked ~ #expand5 {
+  height: 300px;
+}
+#toggle5:checked ~ label::before {
+  content: "+";
+}
+#toggle7:checked ~ #expand7 {
+  height: 150px;
+}
+#toggle7:checked ~ label::before {
+  content: "+";
+}
+#toggle8:checked ~ #expand8 {
+  height: 200px;
+}
+#toggle8:checked ~ label::before {
+  content: "+";
+}
+#toggle9:checked ~ #expand9 {
+  height: 200px;
+}
+#toggle9:checked ~ label::before {
+  content: "+";
+}
+#toggle10:checked ~ #expand10 {
+  height: 300px;
+}
+#toggle10:checked ~ label::before {
+  content: "+";
+}
+#toggle11:checked ~ #expand11 {
+  height: 100px;
+}
+#toggle11:checked ~ label::before {
+  content: "+";
+}
+#toggle12:checked ~ #expand12 {
+  height: 100px;
+}
+#toggle12:checked ~ label::before {
+  content: "+";
+}
+#toggle13:checked ~ #expand13 {
+  height: 100px;
+}
+#toggle13:checked ~ label::before {
+  content: "+";
+}
+#toggle14:checked ~ #expand14 {
+  height: 100px;
+}
+#toggle14:checked ~ label::before {
+  content: "+";
+}
+#toggle15:checked ~ #expand15 {
+  height: 150px;
+}
+#toggle15:checked ~ label::before {
+  content: "+";
+}

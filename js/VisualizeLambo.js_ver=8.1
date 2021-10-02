@@ -1,0 +1,279 @@
+//Global Variables old: w:600 h:324
+var gwidth=1000;
+var gheight=545;
+
+
+
+function showLambo(attributes,model,overlay){
+	console.log("SHOWLAMBO --- CALL !!!!!!!!!");
+	
+	var json_Lambo=JSON.parse(JSON.stringify(json_LamboInit));
+	//var json_Lambo=reset_json_Lambo();
+	console.log("json_Lambo:");
+	console.log(JSON.stringify(json_Lambo));
+	
+	var car_tml="<div>";
+	var mname="unknown Model";
+	var mpath="";
+	var mattributes=[];
+	
+	
+	//Pre-Fill attributes for Model:
+	
+	
+	//console.log("MODEL:"+model);
+	
+	//iterate to find right model
+	for(var i=0;i<modelsDB.length;i++)
+		{
+			//console.log("ModelsDB["+i+"] "+modelsDB[i].model);
+			if(modelsDB[i].model==model)
+				{
+					mname=modelsDB[i].name;
+					mpath=modelsDB[i].path;
+					//console.log(modelsDB[i].baseAttributes.attribute);
+					for(var j=0;j<modelsDB[i].baseAttributes.attribute.length;j++)
+						{
+							mattributes[j]={attribute: modelsDB[i].baseAttributes.attribute[j], value: modelsDB[i].baseAttributes.value[j]};
+						}
+					//console.log(mattributes[0].attribute);
+				}
+		}
+	json_Lambo.model=mname;
+	json_Lambo.svg_components.base=mpath;
+	
+	//Get Serial No
+	json_Lambo.number=parseSerialNumber(attributes); //parseNonVisualAttributesDB(i,attributes);
+	
+	car_tml+="<p>Model: "+mname+" No.:"+json_Lambo.number+"</p>";
+	
+	//Visualize the Model
+	car_tml+="<div>"+
+	"<svg width='"+gwidth+"' height='"+gheight+"'><rect id='bg' x='0' y='0' width='"+gwidth+"' height='"+gheight+"' fill='blue' opacity='0.25' />"+
+	"<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+mpath+"'/>";
+	
+	
+	//Visualize the Customizations & calculate the nonVisualImpact on the Attributes
+	var json_i=0;
+	for(var i=0;i<visualAttributesDB.length;i++)
+		{
+			//console.log("ModelsDB["+i+"] "+modelsDB[i].model);
+			if(visualAttributesDB[i].model==model)
+				{
+					
+					var part=parseVisualAttributesDB(i,attributes);
+					if(part==visualAttributesDB[i].value)
+						{
+							car_tml+="<image id='"+visualAttributesDB[i].id+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+							"xlink:href='"+visualAttributesDB[i].path+"'/>";
+							
+							//Fill Lambo JSON:
+							json_Lambo.svg_components.options[json_i]=visualAttributesDB[i].path;
+							json_Lambo.svg_components.ids[json_i]=visualAttributesDB[i].id;
+							json_Lambo.svg_components.pos[json_i]=visualAttributesDB[i].pos;
+							json_i++;
+							//Impact on Non Visual Attributes:
+							//console.log("impactAttributes.attribute.length:");
+							//console.log(visualAttributesDB[i].impactAttributes.attribute.length);
+							for(var j=0;j<visualAttributesDB[i].impactAttributes.attribute.length;j++)
+								{
+
+									mattributes[visualAttributesDB[i].impactAttributes.attribute[j]].value += visualAttributesDB[i].impactAttributes.changeValue[j];
+									//console.log(mattributes[visualAttributesDB[i].impactAttributes.attribute[j]].value);
+									//console.log(visualAttributesDB[i].impactAttributes.changeValue[j]);
+
+								}
+							
+						}
+					
+				}
+		}
+		
+	//Overlay For Sale:
+	if(overlay==1)
+		{
+			car_tml+="<image id='forSale' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+			"xlink:href='svg-overlay/forSale.png'/>";
+		}	
+		
+	car_tml+="</svg></div>";
+	
+	//Calculate the nonVisualImpact of nonVisualAttributes (aka Tuned Options) on the Attributes
+	for(var i=0;i<nonVisualAttributesDB.length;i++)
+		{
+			
+			if(nonVisualAttributesDB[i].model==model)
+				{
+	
+					var part=parseNonVisualAttributesDB(i,attributes);
+					if(part==nonVisualAttributesDB[i].value)
+						{
+							for(var j=0;j<nonVisualAttributesDB[i].impactAttributes.attribute.length;j++)
+								{
+								
+									mattributes[nonVisualAttributesDB[i].impactAttributes.attribute[j]].value += nonVisualAttributesDB[i].impactAttributes.changeValue[j];
+									//console.log(mattributes[nonVisualAttributesDB[i].impactAttributes.attribute[j]].value);
+									//console.log(nonVisualAttributesDB[i].impactAttributes.changeValue[j]);
+
+								}
+							
+						}
+					
+				}
+		
+		}	
+
+	
+	
+	//Display Non Visual Attributes (By now all Attributes have been calculated)
+	for(var i=0;i<mattributes.length;i++)
+			{
+				//car_tml+="<p>"+attributesDB[mattributes[i].attribute].name+": "+mattributes[i].value.toFixed(attributesDB[mattributes[i].attribute].decimals,1)+" "+attributesDB[mattributes[i].attribute].description+"</p>";
+				json_Lambo.car_specs.name[i]=attributesDB[mattributes[i].attribute].name;
+				
+				if($.isNumeric( mattributes[i].value ))
+					{
+					json_Lambo.car_specs.spec[i]=""+mattributes[i].value.toFixed(attributesDB[mattributes[i].attribute].decimals,1)+" "+attributesDB[mattributes[i].attribute].description;
+		
+					}
+				else{
+					json_Lambo.car_specs.spec[i]=""+mattributes[i].value+" "+attributesDB[mattributes[i].attribute].description;
+		
+					}
+			}
+	
+	
+	
+	//car_tml+="<p>Model: "+mname+"</p><br>";
+	car_tml+="</div>";
+	
+	//return car_tml;
+	console.log("Return Visualize Lambo (json_Lambo):");
+	console.log(JSON.stringify(json_Lambo));
+	
+	return json_Lambo;
+	//return <div> ... </div> html
+}
+
+
+function showTuningKits(attributes,model){
+	var car_tml="<div>";
+	var json_Lambo=JSON.parse(JSON.stringify(json_LamboInit));
+	
+	//Get Name & Description of nonVisualAttributes (aka Tuned Options) on the Attributes
+	var json_i=0;
+	for(var i=0;i<nonVisualAttributesDB.length;i++)
+		{
+			
+			if(nonVisualAttributesDB[i].model==model)
+				{
+	
+					var part=parseNonVisualAttributesDB(i,attributes);
+					if(part==nonVisualAttributesDB[i].value)
+						{
+							car_tml+="<p>"+	nonVisualAttributesDB[i].name + ": "+nonVisualAttributesDB[i].description+"</p>";	
+							json_Lambo.tune_options.name[json_i]=nonVisualAttributesDB[i].name;
+							json_Lambo.tune_options.description[json_i]=nonVisualAttributesDB[i].description;
+							json_i++;
+										
+						}
+					
+				}
+		
+		}
+		
+		for(var i=0;i<visualAttributesDB.length;i++)
+			{
+			
+				if(visualAttributesDB[i].model==model)
+					{
+	
+						var part=parseVisualAttributesDB(i,attributes);
+						if(part==visualAttributesDB[i].value&&visualAttributesDB[i].value!=0)
+							{
+								car_tml+="<p>"+	visualAttributesDB[i].name + ": "+visualAttributesDB[i].description+"</p>";		
+								json_Lambo.tune_options.name[json_i]=visualAttributesDB[i].name;
+								json_Lambo.tune_options.description[json_i]=visualAttributesDB[i].description;
+								json_i++;		
+							}
+					
+					}
+		
+			}	
+	car_tml+="</div>";
+	
+	//return car_tml;
+	return json_Lambo;
+	}
+
+function parseSerialNumber(attributes){
+		var part=new BigNumber.config({ POW_PRECISION: 0 });
+		var part2=new BigNumber.config({ POW_PRECISION: 0 });
+		part= BigNumber(attributes.shiftedBy(-66));
+		part2= BigNumber(attributes.shiftedBy(-(66+5)));
+
+		part2=BigNumber(part2).toFixed(0,1); 
+		//console.log("PART2 "+part2);
+
+		var p=new BigNumber.config({ POW_PRECISION: 0 });
+		p=BigNumber(Math.pow(10,5));
+		p=BigNumber(p).toFixed(0,1);
+		//console.log("p: "+p);
+		part2=BigNumber(part2).times(BigNumber(p));
+		part2=BigNumber(part2).toFixed(0,1);
+		//console.log("PART2 "+part2);
+		part=BigNumber(part).toFixed(0,1);
+		//console.log("PART "+part);
+		part=BigNumber(part).minus(BigNumber(part2));
+	
+		return part;
+	
+	}
+
+function parseNonVisualAttributesDB(i,attributes){
+	var part=new BigNumber.config({ POW_PRECISION: 0 });
+	var part2=new BigNumber.config({ POW_PRECISION: 0 });
+	part= BigNumber(attributes.shiftedBy(-nonVisualAttributesDB[i].attPos));
+	part2= BigNumber(attributes.shiftedBy(-(nonVisualAttributesDB[i].attPos+nonVisualAttributesDB[i].attRange)));
+
+	part2=BigNumber(part2).toFixed(0,1); 
+	//console.log("PART2 "+part2);
+
+	var p=new BigNumber.config({ POW_PRECISION: 0 });
+	p=BigNumber(Math.pow(10,nonVisualAttributesDB[i].attRange));
+	p=BigNumber(p).toFixed(0,1);
+	//console.log("p: "+p);
+	part2=BigNumber(part2).times(BigNumber(p));
+	part2=BigNumber(part2).toFixed(0,1);
+	//console.log("PART2 "+part2);
+	part=BigNumber(part).toFixed(0,1);
+	//console.log("PART "+part);
+	part=BigNumber(part).minus(BigNumber(part2));
+	
+	return part;
+	
+}
+
+function parseVisualAttributesDB(i,attributes){
+	var part=new BigNumber.config({ POW_PRECISION: 0 });
+	var part2=new BigNumber.config({ POW_PRECISION: 0 });
+	part= BigNumber(attributes.shiftedBy(-visualAttributesDB[i].attPos));
+	part2= BigNumber(attributes.shiftedBy(-(visualAttributesDB[i].attPos+visualAttributesDB[i].attRange)));
+
+	part2=BigNumber(part2).toFixed(0,1); 
+	//console.log("PART2 "+part2);
+
+	var p=new BigNumber.config({ POW_PRECISION: 0 });
+	p=BigNumber(Math.pow(10,visualAttributesDB[i].attRange));
+	p=BigNumber(p).toFixed(0,1);
+	//console.log("p: "+p);
+	part2=BigNumber(part2).times(BigNumber(p));
+	part2=BigNumber(part2).toFixed(0,1);
+	//console.log("PART2 "+part2);
+	part=BigNumber(part).toFixed(0,1);
+	//console.log("PART "+part);
+	part=BigNumber(part).minus(BigNumber(part2));
+	
+	return part;
+	
+}

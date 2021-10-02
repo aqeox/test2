@@ -1,0 +1,680 @@
+function menuWrongNetwork(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+		"<h1 class='elhead'>E T H E R  L A M B O S</h1>"+
+		
+		"<p class='elmain-center'>"+
+		"<br>EtherLambos is a recently rediscovered NFT project (2017/2018). <br>Featuring a limited edition of upgradeable blockchain supercars, EtherLambos represents the first and most important crypto meme.<br> <br></p>"+
+  	  	    "<p class='elmain2-center' id='profileViewHead'> <u>Please Change to Main Network in your Metamask Client</u></p>"+
+	  "<br><br>";
+
+  		$("#space").html("<br><br><br><br><br><br><br><br>");
+	  	$("#modelView").show();
+  		$("#buyModelVitalik").attr('href','vitalik.html');
+  		$("#buyModelVitalik").html('View Model Vitalik');
+  		$("#buyModelSatoshi").attr('href','satoshi.html');
+  		$("#buyModelSatoshi").html('View Model Satoshi');
+  		$("#buyModelMonera").attr('href','monera.html');
+  		$("#buyModelMonera").html('View Model Monera');
+  		$("#buyModelCharlie").attr('href','charlie.html');
+  		$("#buyModelCharlie").html('View Model Charlie');
+  		$("#buyModelOne").attr('href','one.html');
+  		$("#buyModelOne").html('View Model One');
+  		$("#buyModelTrex").attr('href','trex.html');
+  		$("#buyModelTrex").html('View Model T-Rex');
+ 	   $("#myGarage").hide();
+		
+		}
+function menuMarketplaceLookup()
+		{
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		"<h1 class='elhead2' id='profileViewHead'>Marketplace</h1>"+
+		"<br><br>"+
+		"<p class='elmain-center' id='profileViewText'> Cars available: </p>";
+		$("#space").html("<br><br>");
+		
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show();
+		$("#myMarketplace").show();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		
+	
+		refreshMarketplace();	
+		}
+function menuMarketplaceLookupLoggedOut()
+		{
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		"<h1 class='elhead2' id='profileViewHead'>Marketplace</h1>"+
+		"<br><br>"+
+		"<p class='elmain-center' id='profileViewText'> Cars available: </p>";
+		$("#space").html("<br><br>");
+		
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").hide();
+		$("#myMarketplace").show();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		
+	
+		refreshMarketplace();	
+		}		
+function menuMarketplaceCarLookup(mpLambo)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		//"<h1 class='elhead2' id='profileViewHead'>Marketplace</h1>"+
+		//"<br><br>"+
+		//"<p class='elmain-center' id='profileViewText'> Cars available: </p>";
+		$("#space").html("<br><br>");
+		
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show();
+		$("#myMarketplace").show();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		$("#modelView").hide();
+	
+			
+		refreshMarketplaceLamboProfile(mpLambo);
+		}
+function menuMarketplaceCarLookupLoggedOut(mpLambo)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		//"<h1 class='elhead2' id='profileViewHead'>Marketplace</h1>"+
+		//"<br><br>"+
+		//"<p class='elmain-center' id='profileViewText'> Cars available: </p>";
+		$("#space").html("<br><br>");
+		
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").hide();
+		$("#myMarketplace").show();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		$("#modelView").hide();
+	
+			
+		refreshMarketplaceLamboProfile(mpLambo);
+		}				
+function menuProfileLookup()
+		{
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a></h1>"+
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>"+
+		"<br><br>"+
+	  	"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		"Wallet: <span id='profileWallet'></span></p>"+
+		"<p class='elmain-center' id='profileViewText'> Cars owned: </p>";
+	
+		
+		var data = new Identicon(profile, options).toString();
+		var trimmedProfile = profile.substring(0, 9);
+
+
+		var areEqual=false;
+		if(acc!=undefined)
+			{
+			areEqual = profile.toUpperCase() === acc.toUpperCase();	
+			console.log("acc: "+acc.toUpperCase());
+			}
+
+
+		console.log("profile: "+profile.toUpperCase());
+		if(areEqual)
+			{
+			$("#profileWallet").html(trimmedProfile+"... (YOU)");	
+			}
+		else
+			{
+			$("#profileWallet").html(trimmedProfile+"...");	
+			}
+
+		$("#space").html("<br><br>");
+		$("#profileViewIdenticon").html('<img src="data:image/svg+xml;base64,' + data + '">');
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show();
+		
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		
+	
+		refreshCarsProfile(profile);	
+		refreshCarsSaleProfile(profile);
+		}	
+		
+function menuLamboLookup(){
+			
+	    document.getElementById("header").innerHTML = "<br><br><br>";
+	    //"<h1 class='elhead2' id='carViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> ";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a></h1>";
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";//+
+		document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	  
+ 	    $("#myGarage").show();
+		
+		document.getElementById("tuneView").innerHTML = "<hr class='featurette-divider' id='Tuning' >"+
+
+	  	"<div class='row row-centered'>"+
+		"<div class='col-lg-6 col-centered'>"+
+
+		"<label for='fname' style='font-size:12px'>TUNE OPTIONS: </label><br>"+
+		"<select id='TuneOptions' style='font-size:14px;width:300px;' onchange='refreshSelectedTuneOptions()'></select>"+
+		"<p class='elmain2'><br>Price:<span id='TuneOptionPrice'></span></p>"+
+		"</div>"+
+
+		"<div class='col-lg-6'>"+
+  	  	"<label for='fname' style='font-size:12px'>DESCRIPTION: </label><br>"+
+		"<span class='elmain' id='TuneOptionDescription'></span>"+
+
+	 	"</div>"+
+		"</div>"+
+
+
+
+
+
+		"<button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneCarOption' onclick='tuneCarOption("+lambo+")'>Buy</button>";
+
+		$("#space").html("");
+		$("#tuneView").hide();
+		$("#modelView").hide();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshLamboProfile();		
+		}
+		
+function menuLamboLookupEtherscan(){
+
+	    document.getElementById("header").innerHTML = "<br><br><br>";
+	   
+		$("#space").html("");
+		$("#tuneView").hide();
+		$("#modelView").hide();
+		$("#myGarage").hide();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshLamboProfileEtherscan();	
+			
+		}
+		function menuMockupLamboLookup(model){
+			
+			    document.getElementById("header").innerHTML = "<br><br><br>"+
+				"<p class='elhead2-center'>Explore Tuning Options </p>";
+		
+		
+				document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	  
+		 	    $("#myGarage").hide();
+		
+				document.getElementById("tuneView").innerHTML = "<hr class='featurette-divider' id='Tuning' >"+
+
+			  	"<div class='row row-centered'>"+
+				"<div class='col-lg-6 col-centered'>"+
+
+				"<label for='fname' style='font-size:12px'>TUNE OPTIONS: </label><br>"+
+				"<select id='MockupTuneOptions' style='font-size:14px;width:300px;' onchange='refreshSelectedMockupTuneOptions("+model+")'></select>"+
+				//"<p class='elmain2'><br>Price:<span id='TuneOptionPrice'></span></p>"+
+				"</div>"+
+
+				"<div class='col-lg-6'>"+
+		  	  	"<label for='fname' style='font-size:12px'>DESCRIPTION: </label><br>"+
+				"<span class='elmain' id='TuneOptionDescription'></span>"+
+
+			 	"</div>"+
+				"</div>";
+
+
+
+
+
+				//"<button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneCarOption' onclick='tuneCarOption("+lambo+")'>Buy</button>";
+
+				$("#space").html("");
+				$("#tuneView").hide();
+				$("#modelView").html("");
+				//$("#header").html("");
+				$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+				$("#myGarage").hide();
+				DisplayMockupCarView(model);
+				//refreshLamboProfile();		
+				}		
+function menuDealerLookup(showModel)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show(); 
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerModelStock(showModel);  
+			
+		}
+
+function menuGiftLookup(showModel)
+		{
+			document.getElementById("header").innerHTML = "<div class='container'><div class='row'><div class='col-lg-12'>"+
+			  "<br><br><br><h1 class='elhead'>C R Y P T O - L A M B O - M O O N</h1>"+
+"<br><p style='text-align:center' class='elhead2'>Congratulations! <br>Your CoinShares Lambo is waiting for you!</p>"+
+			"</div></div></div>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show(); 
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		
+		$("#profileView").html("<br><img class='picmain_top2' src='img/cs_nodesc.png' alt='CoinShares'><br><br><p class='elmain-center'><a class='btn btn-primary elbutton' href='' role='button'>Get CoinShares Lambo &raquo;</a></p><br><p class='elmain'><a href='/prestage/coinshares.html'>Get back to Model CoinShares page</a></p>");
+		//refreshGiftModelStock(showModel);  
+			
+		}
+function menuGiftLookupLoggedOut(showModel)
+		{
+			document.getElementById("header").innerHTML = "<div class='container'><div class='row'><div class='col-lg-12'>"+
+			  "<br><br><br><h1 class='elhead'>C R Y P T O - L A M B O - M O O N</h1>"+
+"<br><p style='text-align:center' class='elhead2'>Congratulations! <br>Your CoinShares Lambo is waiting for you!</p>"+
+			"</div></div></div>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		//document.getElementById("myGarage").href ="index.html";
+		$("#myGarage").hide();	
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		$("#profileView").html("<br><img class='picmain_top2' src='img/cs_nodesc.png' alt='CoinShares'><br><br><p class='elmain-center'><a class='btn btn-primary elbutton' href='' role='button'>Get CoinShares Lambo &raquo;</a></p><br><p class='elmain'><a href='/prestage/coinshares.html'>Get back to Model CoinShares page</a></p> ");
+		
+		//refreshDealerModelStock(showModel);  //<-- 2 = Satoshi			
+			$("#myGarage").hide();	
+		}
+		
+function menuDealerAffiliateLookup(showModel,code)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show(); 
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerAffiliateModelStock(showModel,code);  
+			
+		}		
+function menuDealerAllLookup(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> "+
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+		
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>"+
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>"+
+		"<br><br>"+
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		"<p class='elmain-center' id='dealerViewText'> Available Models </p>";
+		$("#space").html("<br><br>");
+		
+ 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    $("#myGarage").show();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerStock();			
+			
+		}
+		
+/*function menuDealerModelsLookup(dealer,l)
+		{
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+	"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+ 	   document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	   $("#myGarage").show();
+		
+		var showModel=0;
+		switch (dealer) {
+		    case "Satoshi":
+		        showModel=2;
+		        break;
+		    case "Vitalik":
+		        showModel=1;
+		        break;
+		    case "Monera":
+		        showModel=3;
+		        break;
+			}
+		$("#space").html("<br><br>");
+		
+		if(l<1&&showModel>0)
+			refreshDealerModelStock(showModel);  //<-- 2 = Satoshi
+
+		if(l>0)
+			refreshDealerLambo(l);
+		
+		//Exception if l => text then "whoops page"		
+		
+		}*/
+function menuStartLookup(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+		"<h1 class='elhead'>E T H E R  L A M B O S</h1>"+
+		"<p class='elmain-center'>"+
+  	  	"<br>EtherLambos is a recently rediscovered NFT project (2017/2018). <br>Featuring a limited edition of upgradeable blockchain supercars, EtherLambos represents the first and most important crypto meme.<br> <br></p>"+
+  	  	
+		    //"<h1 class='elhead2' id='profileViewHead'> <a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>"+
+	  "<br><br>";
+
+	   document.getElementById("myGarage").href ="index.php?profile="+acc;
+	   $("#myGarage").show();	
+  		$("#space").html("<br><br><br><br><br><br><br><br>");
+
+		$("#buyModelVitalik").attr('href','index.php?dealer=Vitalik');
+  		  $("#buyModelVitalik").html('Buy Model Vitalik');
+  		  $("#buyModelSatoshi").attr('href','index.php?dealer=Satoshi');
+  		  $("#buyModelSatoshi").html('Buy Model Satoshi');
+  		  $("#buyModelMonera").attr('href','index.php?dealer=Monera');
+  		  $("#buyModelMonera").html('Buy Model Monera');
+		  $("#buyModelCharlie").attr('href','index.php?dealer=Charlie');
+    	  $("#buyModelCharlie").html('Buy Model Charlie');
+		  $("#buyModelOne").attr('href','index.php?dealer=One');
+    	  $("#buyModelOne").html('Buy Model One');
+		  $("#buyModelTrex").attr('href','index.php?dealer=Trex');
+    	  $("#buyModelTrex").html('Buy Model T-Rex');
+		$("#modelView").show();	
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+function menuProfileLookupLoggedOut(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='profileViewHead'><u>Lambos</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> "+
+		//"<h1 class='elhead2' id='profileViewHead'><u>My Cars</u></h1>"+
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>"+
+		"<br><br>"+
+	  	"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		"Wallet: <span id='profileWallet'></span></p>"+
+		"<p class='elmain-center' id='profileViewText'> Cars owned: </p>";
+
+		var data = new Identicon(profile, options).toString();
+		var trimmedProfile = profile.substring(0, 9);
+
+
+		var areEqual=false;
+		if(acc!=undefined)
+			{
+			areEqual = profile.toUpperCase() === acc.toUpperCase();	
+			console.log("acc: "+acc.toUpperCase());
+			}
+
+
+		console.log("profile: "+profile.toUpperCase());
+		if(areEqual)
+			{
+			$("#profileWallet").html(trimmedProfile+"... (YOU)");	
+			}
+		else
+			{
+			$("#profileWallet").html(trimmedProfile+"...");	
+			}
+
+		$("#space").html("<br><br>");
+		$("#profileViewIdenticon").html('<img src="data:image/svg+xml;base64,' + data + '">');
+
+		$("#myGarage").hide();	
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+
+		refreshCarsProfile(profile);
+		refreshCarsSaleProfile(profile);
+		}	
+		
+function menuLamboLookupLoggedOut(){
+	document.getElementById("header").innerHTML = "<br><br><br>";
+	    //"<h1 class='elhead2' id='carViewHead'><u>My Cars</u> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a> ";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+		
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <a style='text-decoration:none;' href='index.php?dealer=all'>Dealer</a></h1>";
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";//+
+		
+		//document.getElementById("myGarage").href ="index.html";
+		$("#myGarage").hide();	
+		
+		document.getElementById("tuneView").innerHTML = "<hr class='featurette-divider' id='Tuning' >"+
+
+	  	"<div class='row row-centered'>"+
+		"<div class='col-lg-6 col-centered'>"+
+
+		"<label for='fname' style='font-size:12px'>TUNE OPTIONS: </label><br>"+
+		"<select id='TuneOptions' style='font-size:14px;width:300px;' onchange='refreshSelectedTuneOptions()'></select>"+
+		"<p class='elmain2'><br>Price:<span id='TuneOptionPrice'></span></p>"+
+		"</div>"+
+
+		"<div class='col-lg-6'>"+
+  	  	"<label for='fname' style='font-size:12px'>DESCRIPTION: </label><br>"+
+		"<span class='elmain' id='TuneOptionDescription'></span>"+
+
+	 	"</div>"+
+		"</div>"+
+
+
+
+
+
+		"<button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneCarOption' onclick='tuneCarOption("+lambo+")'>Tune</button>";
+
+
+		$("#tuneView").hide();
+
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshLamboProfile();		
+				
+		}
+		
+function menuDealerLookupLoggedOut(showModel)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		//document.getElementById("myGarage").href ="index.html";
+		$("#myGarage").hide();	
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerModelStock(showModel);  //<-- 2 = Satoshi			
+			$("#myGarage").hide();	
+		}
+
+function menuDealerAffiliateLookupLoggedOut(showModel,code)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		$("#myGarage").hide();
+		$("#space").html("<br><br>");
+		$("#modelView").hide();
+ 	    //document.getElementById("myGarage").href ="index.php?profile="+acc;
+ 	    
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerAffiliateModelStock(showModel,code);  
+		$("#myGarage").hide();
+		}		
+		
+function menuDealerAllLookupLoggedOut(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+	    //"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> "+
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>"+
+		//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>"+
+		"<br><br>"+
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		"<p class='elmain-center' id='dealerViewText'> Available Models </p>";
+
+		//document.getElementById("myGarage").href ="index.html";
+		$("#myGarage").hide();	
+		$("#space").html("<br><br>");
+		$("#profileView").html("<br><p class='elhead2-center' id='loading' > <img src='img/loading.gif'/></p><br>");
+		refreshDealerStock();
+		}
+		
+/*function menuDealerModelsLookupLoggedOut(dealer,l)
+		{
+			document.getElementById("header").innerHTML = "<br><br><br>";
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>Lambos</a> &middot; <u>Dealer</u> ";
+		//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a></h1>";
+	
+	//"<h1 class='elhead2' id='carViewHead'><a style='text-decoration:none;' href='index.php?profile="+acc+"'>My Cars</a> &middot; <a style='text-decoration:none;' href='index.php'>Models</a> &middot; <u>Dealer</u></h1>";
+	//"&middot; <a style='text-decoration:none;' href=''>Marketplace</a></h1>";
+	  	//"<p class='elhead2-center' id='profileViewWallet' > <span id='profileViewIdenticon'> </span> &middot; "+
+		//"Wallet: <span id='profileWallet'></span></p>"+
+		//"<p class='elmain-center' id='dealerViewText'> Satoshi Stock </p>";
+		
+		//document.getElementById("myGarage").href ="index.html";
+		$("#myGarage").hide();	
+		
+		var showModel=0;
+		switch (dealer) {
+		    case "Satoshi":
+		        showModel=2;
+		        break;
+		    case "Vitalik":
+		        showModel=1;
+		        break;
+		    case "Monera":
+		        showModel=3;
+		        break;
+			}
+		$("#space").html("<br><br>");
+
+		if(l<1&&showModel>0)
+			refreshDealerModelStock(showModel);  //<-- 2 = Satoshi
+
+		if(l>0)
+			refreshDealerLambo(l);
+
+		//Exception if l => text then "whoops page"	
+		
+		}*/
+function menuStartLookupLoggedOut(){
+		document.getElementById("header").innerHTML = "<br><br><br>"+
+		"<h1 class='elhead'>E T H E R  L A M B O S</h1>"+
+		"<p class='elmain-center'>"+
+  	  	"<br>EtherLambos is a recently rediscovered NFT project (2017/2018). <br>Featuring a limited edition of upgradeable blockchain supercars, EtherLambos represents the first and most important crypto meme.<br> <br></p>"+
+  	  	    "<p class='elmain2-center' id='profileViewHead'> ▶ <u>Please Login to your Metamask Client </u> ◀ </p>"+
+	  	"<br><br>";
+
+  		$("#space").html("<br><br><br><br><br><br><br><br>");
+  		$("#buyModelVitalik").attr('href','vitalik.html');
+  		$("#buyModelVitalik").html('View Model Vitalik');
+  		$("#buyModelSatoshi").attr('href','satoshi.html');
+  		$("#buyModelSatoshi").html('View Model Satoshi');
+  		$("#buyModelMonera").attr('href','monera.html');
+  		$("#buyModelMonera").html('View Model Monera');
+  		$("#buyModelCharlie").attr('href','charlie.html');
+  		$("#buyModelCharlie").html('View Model Charlie');
+  		$("#buyModelOne").attr('href','one.html');
+  		$("#buyModelOne").html('View Model One');
+  		$("#buyModelTrex").attr('href','trex.html');
+  		$("#buyModelTrex").html('View Model T-Rex');
+  	  	$("#modelView").show();			
+		$("#myGarage").hide();	
+		}
+		
+function menuNoMetamask(){
+		//You need MM!
+			//DisplayGetMetamask();
+		
+		var ctml="";
+		ctml+= "<br><br><br>"+
+		"<h1 class='elhead'>E T H E R  L A M B O S</h1>"+
+		"<p class='elmain-center'>";
+		if(window.mobilecheck()==true) {
+		ctml+="<br>EtherLambos is a recently rediscovered NFT project (2017/2018). <br>Featuring a limited edition of upgradeable blockchain supercars, EtherLambos represents the first and most important crypto meme.<br> <br></p>"+
+		    "<p class='elmain2-center' id='profileViewHead'> <u>Desktop users please install <a target='_blank' href='https://www.metamask.io'> Metamask</a> for tuning/trading functionality."+
+			"<br>Mobile device users please install <a target='_blank' href='https://www.cipherbrowser.com/'> CipherBrowser</a> for tuning/trading functionality.</u></p>"+
+	  "<br><br>";
+		   } else {
+   		ctml+="<br>EtherLambos is a recently rediscovered NFT project (2017/2018). <br>Featuring a limited edition of upgradeable blockchain supercars, EtherLambos represents the first and most important crypto meme.<br> <br></p>"+
+   		    "<p class='elmain2-center' id='profileViewHead'> <u>Please Install <a target='_blank' href='https://www.metamask.io'> Metamask</a> to view/tune/trade etherlambos</u></p>"+
+   	  "<br><br>";
+		   }
+ 
+		   document.getElementById("header").innerHTML=ctml;
+
+	  $("#space").html("<br><br><br><br><br><br><br><br>");
+	  $("#buyModelVitalik").attr('href','vitalik.html');
+	  $("#buyModelVitalik").html('View Model Vitalik');
+	  $("#buyModelSatoshi").attr('href','satoshi.html');
+	  $("#buyModelSatoshi").html('View Model Satoshi');
+	  $("#buyModelMonera").attr('href','monera.html');
+	  $("#buyModelMonera").html('View Model Monera');
+	  $("#buyModelCharlie").attr('href','charlie.html');
+	  $("#buyModelCharlie").html('View Model Charlie');
+	  $("#buyModelOne").attr('href','one.html');
+	  $("#buyModelOne").html('View Model One');
+	  $("#buyModelTrex").attr('href','trex.html');
+	  $("#buyModelTrex").html('View Model T-Rex');
+	  $("#modelView").show(); 
+  	  $("#myGarage").hide();	
+  //$("#profileView").hide();
+		}

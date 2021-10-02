@@ -1,0 +1,293 @@
+function refreshCars(){
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(acc, (error,result) => {
+			var t = new Array();
+			if(!error){
+				//console.log(result.length);
+				for(i=0;i<result.length;i++)
+					{
+						t[i]=result[i].c;
+						//console.log(t[i]);
+					}
+				}
+			else
+				{
+				//console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+ 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		//console.log("You have "+tokens.length+" Tokens!");
+		//$("#tokensOfOwner").html("You have "+tokens.length+" Cars!");
+		
+		async.map(tokens, getLambosGarage, function (err, results) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  //console.log("Finished1!");
+		  //console.log(results);
+		  callback(null, results);
+		});
+    },
+    
+], function (err, result) {
+	//console.log("res: "+result);  
+   // result now equals 'done'    
+	//var car_tml="<p>";
+	var result_json = [];
+	
+	//init result_json
+	for(var i=0;i<result.length;i++)
+		{
+			//json_LamboInit.token_id=i;
+			//console.log(json_LamboInit.token_id);
+			result_json[i]=JSON.parse(JSON.stringify(json_LamboInit));
+		}
+	
+	console.log("result_json:");
+	for(var i=0;i<result.length;i++)
+		{
+			console.log("ARRAY"+i+"   ");
+			console.log(JSON.stringify(result_json[i]));
+		}
+	
+	for(i=0;i<result.length;i++)
+		{
+			
+			//initialize Object
+			//json_Lambo ="";
+			//json_Lambo = Object.assign({}, json_LamboInit);
+			
+			
+			//car_tml=car_tml+"<br>"+"Car #"+result[i][1];
+			
+			//car_tml=car_tml+showLambo(result[i][0],result[i][2],0);
+			
+			//car_tml+="<p>Tuned:</p>";
+			//car_tml=car_tml+showTuningKits(result[i][0],result[i][2]);
+			
+			//car_tml=car_tml+"<button id='sellButton_"+i+"' onclick='selectCar("+result[i][1]+")'>Sell Car</button>"; //
+			
+			//Add Tune Button ->
+			//car_tml=car_tml+
+			//"<button id='tuneButton_"+i+"' onclick='tuneCar("+result[i][1]+")'>Tune Car</button><br>"; //
+			
+			//Build JSON Return:
+			
+			console.log("ASSIGN OBJECT: i: "+i);
+			
+			result_json[i]= JSON.parse(JSON.stringify(showLambo(result[i][0],result[i][2],0)));
+			result_json[i].token_id=result[i][1];
+			result_json[i].tune_options=JSON.parse(JSON.stringify(showTuningKits(result[i][0],result[i][2]))).tune_options;
+			console.log("result_Lambo["+i+"]:");
+			console.log(JSON.stringify(result_json[i]));
+			
+			/*for(var j=0;j<result_json.length;j++)
+				{
+					console.log("--------");
+					console.log("-------- ITERATE ------ result_Lambo["+j+"]:");
+					console.log(JSON.stringify(result_json[j]));
+					console.log("--------");
+				}*/
+			
+		}
+	//console.log(car_tml);  
+	//car_tml=car_tml+"<br>"+"JSON Content: "+JSON.stringify(result_json);
+	//$("#Cars").html(car_tml+"</p>");
+	return result_json;
+});
+}
+
+var getLambosGarage = function (t, doneCallback) {
+  // Call back with no error and the result of num * num
+	//console.log("ENTERING GETLAMBO");
+	EtherLambos.getLambo(t,(error,result) => { 
+		if(!error){
+			//console.log("GET LAMBO: "+result[1]+ " t: "+t);
+			var r = [];
+			r[0] = new BigNumber(result[1]);
+			r[1]=t;
+
+			
+			EtherLambos.getLamboModel(t,(error,result_model) => { 
+				if(!error){
+					//console.log("GET LAMBO MODEL: "+result_model.c);
+					var r2 = [];
+					r2[0]=r[0];
+					r2[1]=r[1];
+					r2[2]=result_model;
+					//console.log(r);
+					return doneCallback(null, r2);
+				}
+				else{
+					//console.log("ERROR"+error);
+				}
+			});
+			
+		}
+		else{
+			//console.log("ERROR"+error);
+		}
+	});
+	
+  
+};
+
+
+
+function selectSellCar(token)
+{
+	//console.log("selectCar: "+token);
+	tokenSelected=token;
+	modal_sell.style.display = "block";
+	//document.getElementById('#mydialog').style.display = 'block';
+}
+
+function openTransferDialog(token)
+{
+	tokenSelected=token;
+	$("#transferMessage").html("");
+	$("#transerAddress").val("");
+	
+	if(window.mobilecheck()==true) {
+		$("#transerAddress").attr('size',35);
+	   } else {
+   		$("#transerAddress").attr('size',70);
+	   }
+	
+	modal_transfer.style.display = "block";
+}
+
+function openShareDialog(token)
+{
+	//tokenSelected=token;
+	var tlink="https://twitter.com/intent/tweet?text=";
+	var flink="https://www.facebook.com/sharer/sharer.php?u=";
+	var msg=encodeURI("What a beauty! ");
+	
+	var llink=encodeURI("https://www.etherlambos.io/index.php?lambo="+token);
+	var tconcat=tlink+msg+llink;
+	console.log("tconcat: "+tconcat);
+	var fconcat=flink+llink;
+	console.log("fconcat: "+fconcat);
+	
+	$("#shareTwitter").attr('href',tconcat);
+	$("#shareFacebook").attr('href',fconcat);
+	$("#copyShareLink").attr('value',"https://www.etherlambos.io/index.php?lambo="+token);
+	/*if(window.mobilecheck()==true) {
+		$("#transerAddress").attr('size',35);
+	   } else {
+   		$("#transerAddress").attr('size',70);
+	   }*/
+	
+	modal_share.style.display = "block";
+}
+
+function tuneCar(token)
+{
+	//console.log("tuneCar: "+token);
+	tokenSelectedForTuning=token;
+	//openTab(event, 'Tune');
+	
+	refreshTuneOptions();
+	//refreshTuneCar();
+	//modal.style.display = "block";
+	//document.getElementById('#mydialog').style.display = 'block';
+}
+
+
+
+function sell(){
+		console.log("Token Price: "+document.getElementById('sellPrice').value);
+		console.log("Token Selected: "+tokenSelected);
+		var towei=web3.toWei(document.getElementById('sellPrice').value, 'ether');
+		console.log("Token Price in Wei: "+towei);
+		//$("#loader-sell").show();
+	
+	    EtherLambos.createLamboSale(tokenSelected,towei,{from: acc, gasPrice: gPrice,gas: g}, (err,res) => {
+	    	if(err){
+	    		//$("#loader").hide();
+				console.log(err);
+	    	}
+			else{
+			modal.style.display = "none";
+			}
+	    });
+	}
+
+function transfer(){
+		console.log("Target Wallet Address: "+document.getElementById('transerAddress').value);
+		console.log("Token Selected: "+lambo);
+		//getGasPrice();
+		//var ngPrice = gPrice+gPrice/2;
+		//var n = Number(gPrice);
+		//var ngPrice = n+n/4;
+		console.log("GasPrice: "+gPrice+ " gas: "+txg); //+ " adj. GasPrice: "+ngPrice);
+		//var towei=web3.toWei(document.getElementById('sellPrice').value, 'ether');
+		//console.log("Token Price in Wei: "+towei);
+		//$("#loader-sell").show();
+		var ngPrice=150000000000;
+		var targetAddress=document.getElementById('transerAddress').value;
+		console.log("Valid Address? -> "+web3.isAddress(targetAddress));
+		if(web3.isAddress(targetAddress))
+		{
+		    $("#transferMessage").html("");
+			EtherLambos.transfer(targetAddress,lambo,{from: acc, gasPrice: ngPrice,gas: txg}, (err,res) => {
+		    	if(err){
+		    		//$("#loader").hide();
+					console.log(err);
+		    	}
+				else{
+				modal_transfer.style.display = "none";
+				}
+		    });
+		}
+		else{
+			$("#transferMessage").html("Invalid Address!");
+		}
+	    
+	}
+
+function cancelSale(token){
+
+		Marketplace.cancelSale(token, {from: acc, gasPrice: gPrice,gas: g}, (err,res) => {
+	    	if(err){
+	    		//$("#loader").hide();
+				console.log(err);
+	    	}
+			else{
+			
+			}
+	    });
+	}	
+	
+$("#button").click(function() {
+		
+	
+	});
+/*
+	var createSaleEvent = Marketplace.SaleCreated({},'latest');
+
+	createSaleEvent.watch(function(error,result){
+		if (!error)
+		{
+			if(result.blockHash != $("#sellTrans").html())
+				$("#loader-sell").hide();
+		
+			$("#sellTrans").html("Block hash: " + result.blockHash);
+		
+			$("#Sale").html("tokenID: "+result.args.tokenId + ' <br>Price: '+result.args.price);
+			refresh();
+			
+		}
+		else{
+			$("#loader").hide();
+			console.log(error);
+		}
+	});*/

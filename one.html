@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	
+	
+    
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="description" content="Etherlambos. Driving value.">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico%3Fver=1">
+
+    <title>Etherlambos - Model One</title>
+	 <link href="css/bootstrap-social.css" rel="stylesheet">
+	 <link href="css/font-awesome.css" rel="stylesheet">
+	
+    <!-- Bootstrap core CSS -->
+	
+    <link href="css/bootstrap.css" rel="stylesheet">
+ <link href="css/ethlambos.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+	
+	  <link href="css/business-frontpage.css" rel="stylesheet">
+	  
+    	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+        <script src="node_modules/web3/dist/web3.min.js"></script>
+    	<script src="js-Lib/bignumber.min.js"></script>
+    	<script src="js-Lib/async.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+      <div  class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto"> 
+			
+		 	
+	   </ul>
+
+
+	  <div class="navbar-header">
+	    <a class="brand" style="margin-right:auto" href="index.html"><img class="eltop"  src="img/etherlambos_head.png" alt="Etherlambos Head" ></a>
+		<br>
+	  </div>
+	  <div class="navbar-link">
+		  <a class="mgarage" id="myGarage" href="one.html#"><img class="mygarage" src="img/mygarage.png" alt="My Garage" ></a>
+	  </div>     
+<div class="navbar-link">
+		 
+		<a class="mmarketplace" id="mymarketplace" href="index.php%3Fmarketplace=show.html"><img class="mymarketplace" src="img/marketplace.png" alt="Marketplace" ></a>
+	  </div> 
+	   <div id="priceForm" class="modal">
+	   	<div class="modal-content">
+	   	    <span class="close">&times;</span>
+	   	    <p class='elmain'> Please set the price in ETH. Click 'Sell' to put your Ethetlambo on the Market Place.</p>
+	   	   <p class='elmain'> <input type="number" placeholder="0.5" step="0.01" min="0" max="10" id="sellPrice" /></p>
+		
+	   		<p class='elmain'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='confirmSellButton' onclick='sell()'>Sell</button></p>
+	   	  </div> 
+	   </div>
+	   
+ 	   <div id="loginMetamask" class="modal">
+ 	   	<div class="modal-content">
+ 	   	    <span class="close_mm">&times;</span>
+			  <div class="row">
+		        <div class="col-lg-7">
+		         <br>
+		  		<h3 class="elhead2">Login to Metamask.</h3>
+		  	  	<br>
+				 <p class="elmain-center">To use EtherLambos, you will need to log in your MetaMask. Usually you can access Metamask in the upper right corner of your Browser.									
+		     	</p>
+
+	        	</div><!-- /.col-lg-4 -->
+				<div class="col-lg-5">
+				  <img  src="img/metamask.png" alt="Metamask" class="bg-mm-dg" />
+		          <p></p>
+		        </div><!-- /.col-lg-4 -->
+			</div>
+ 	   	  </div> 
+ 	   </div>
+      </div>
+	  
+    </nav>
+	
+<!-- Header with Background Image -->
+    <header class="business-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+			  <br>
+			  <br>
+			  <br>
+			  <h1 class="elhead">M O D E L - O N E</h1>
+
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <div class="container marketing" id="models">
+		 
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+		  <img src="img/one_nodesc.png" alt="Model One" class="picmain_top">
+        <div class="col-lg-12">
+          
+          
+		  
+		  
+		
+		   <p class="elmain-center">
+ONE is on the way to become an automotive icon. Emerging from a Chinese collaboration of tech-enthusiasts, ONE represents luxury and heritage. Its remarkable design philosophy meets a sublime sporting ability. Electric power for the front and a turbocharged dBFT powertrain at the rear allow for a unique driving experience specific to versatile use cases.
+<br></p>
+		
+  	  <p class="elmain2-center">
+  	 Limited supply: 300 vehicles </p>
+	
+
+	
+			<p class="elmain-center"><a id="mockupOne" class="btn btn-primary elbutton" href="index.php%3Fmockup=One.html" role="button">Explore Tuning Options &raquo;</a></p>
+          <p></p>
+        </div><!-- /.col-lg-4 -->
+    </div>   
+        
+	<br>
+	<br><br>
+	<br><br>
+	<br>
+	
+    
+	</div>
+	
+		
+<img class="bg-wide" src="img/one_wide.png" alt="closeup" >	
+
+	<br>
+	<br><br>
+	<br><br>
+	<br>
+     <div class="container marketing" id="models">
+      <div class="row">
+        <div class="col-lg-7">
+          
+          
+		  
+		  <img  src="img/one_closeup2.png" alt="One Back" class="bg-quad">
+          <p></p>
+           
+        </div><!-- /.col-lg-4 -->
+       
+        <div class="col-lg-5">
+          <br><br><br>
+  <h3 class="elhead2">U L T R A L I G H T</h3>
+  <br>
+		 <p class="elmain-center">An innocent three-layer white painted body is contrasted by a bilious green super-resistant and advanced PMMA-modelled front and side, which lightens the load and guarantees a long-term mechanical performance. ONE is an aerodynamic prodigy: its futuristic design minimizes wind resistance and maximizes thermal management. The smart positioning of the ultralight wheels guarantees a superb weight distribution at all tracks and energy-low PoS consensus around all blocks.
+
+		
+     </p>
+        
+        </div><!-- /.col-lg-4 -->
+		<img  src="img/one_closeup2.png" alt="One Back" class="bg-quad-mobile">
+	</div>
+
+      <div class="row">
+        
+       
+        <div class="col-lg-6">
+          <br><br><br>
+  <h3 class="elhead2">S C A L A B I L I T Y</h3>
+  <br>
+		<p class="elmain-center">ONE embodies craftsmanship of highest quality. The monstrous specs are enabled by a hybrid combination of a turbo-charged V6 dBFT engine supported by electric motors. This set-up is capable of handling thousands of transactions per second and delivering a 0-100 km/h acceleration of 2.4 seconds. A super-low driving position creates a more immersive experience, intimately connecting the driver with the supercar and the blocks ahead.
+
+
+		
+       </p>
+        
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          
+          
+		  
+		  <img  src="img/one_closeup3.png" alt="One" class="bg-quad">
+          <p></p>
+           
+        </div><!-- /.col-lg-4 -->
+	</div>
+
+      <div class="row">
+        
+       
+        <div class="col-lg-12">
+          <br><br><br>
+
+  <h3 class="elhead2"></h3>
+  <br>
+
+  <table class="eltable3-center tbldesktop" style="width:100%;">
+   <tr>
+     <th height="70"  class="elmain2-center" >S P E C I F I C A T I O N S</th>
+	  <th height="70" class="elmain2-center">U P G R A D E S</th>
+
+    </tr> 
+    <tr>
+      <td height="30"  class="elmain tdwidth" >Engine:  <span class="tblspan100"></span>3.5 litre, V6 hybrid gas twin turbo dBFT engine</td>
+	  <td rowspan="8" class="elmain-center tblpadding">Owners will not only be able to collect the Etherlambo and to trade it on the blockchain. It will also be possible to tune the car, which will then translate into a change of design and other parameters determined in the smart contract. For example, the performance kit “exterior” allows to add a rear wing. Owners will also be able to choose another colour.
+</td>
+    </tr>
+   <tr>
+      <td height="30" class="elmain">Max. Power:<span class="tblspan70"></span>combined 900hp</td>
+
+
+    </tr>
+   <tr>
+      <td height="30" class="elmain">Top Speed:<span class="tblspan77"></span>350 km/h</td>
+    </tr>
+    <tr>
+      <td height="30" class="elmain">Acceleration:<span class="tblspan65"></span>0 to 100 km/h in 2.4/sec</td>
+    </tr>
+    <tr>
+      <td height="30" class="elmain">Chassis:<span class="tblspan95"></span>Carbon Fiber with advanced PMMA shield</td>
+    </tr>
+    <tr>
+      <td height="30" class="elmain">Aerodynamics:<span class="tblspan53"></span>Downforce and stability oriented design;  
+ <br> <span class="tblspan146"></span>air intakes front.</td>
+    </tr>
+    <tr>
+      <td height="30" class="elmain">Colour:<span class="tblspan99"></span>NEO</td>
+    </tr>
+  </table>
+ 
+	  <table class="eltable3-center tblmobile" style="width:100%;">
+	   <tr>
+	     <th colspan="2" height="70"  class="elmain2-center" >S P E C I F I C A T I O N S</th>
+		 
+
+	    </tr> 
+	    <tr>
+	      <td height="30"  class="elmain tdwidth" >Engine: </td>
+		  <td class="elmain-center tdwidth">3.5 litre, V6 hybrid gas twin turbo dBFT engine
+</td>
+	</td>
+	    </tr>
+	   <tr>
+	      <td height="30" class="elmain">Max. Power:</td>
+<td class="elmain-center">combined 900hp</td>
+
+	    </tr>
+	   <tr>
+	      <td height="30" class="elmain">Top Speed:</td>
+		  <td class="elmain-center">350 km/h</td>
+	    </tr>
+	    <tr>
+	      <td height="30" class="elmain">Acceleration:</td>
+		  <td class="elmain-center"> 0 to 100 km/h in 2.4/sec</td>
+	    </tr>
+	    <tr>
+	      <td height="30" class="elmain">Chassis:</td>
+		  <td class="elmain-center">Carbon Fiber with advanced PMMA shield</td>
+	    </tr>
+	    <tr>
+	      <td height="30" class="elmain">Aerodynamics:<span class="tblspan53"></td>
+		  <td class="elmain-center">Downforce and stability oriented design;
+<br>air intakes front.</td>
+	    </tr>
+	    <tr>
+	      <td height="30" class="elmain">Colour:</td>
+		  <td class="elmain-center">NEO</td>
+	    </tr>
+	  </table>	
+	  
+	 
+	    <table class="eltable3-center tblmobile" style="width:100%;">
+			 <br><br><br>
+	     <tr>
+	  	  <th height="70" class="elmain2-center">U P G R A D E S</th>
+
+	      </tr> 
+	      <tr>
+	      
+	  	  <td class="elmain-center tblpadding">Owners will not only be able to collect the Etherlambo and to trade it on the blockchain. It will also be possible to tune the car, which will then translate into a change of design and other parameters determined in the smart contract. For example, the performance kit “exterior” allows to add a rear wing. Owners will also be able to choose another colour.
+	  </td>
+  </table>
+          <p></p>
+        
+        </div><!-- /.col-lg-4 -->
+
+      </div>
+	  
+ <hr class="featurette-divider" id="Footer" >
+
+      <!-- /END THE FEATURETTES -->
+
+
+        <!-- FOOTER -->
+		        <footer>
+		          <p class="float-right elmain"><a href="one.html#">Back to top</a></p>
+		  		<p class="float-right"> <a target="_blank" href="one.html" class="btn btn-social-icon ">
+		    
+		  		  </a></p>
+		  		<p class="float-right  elmain"> <a target="_blank" href="http://twitter.com/Etherlambos" class="btn btn-social-icon btn-twitter">
+		  		    <span class="fa fa-twitter"></span>
+		  		  </a>
+		  	 <a target="_blank" href="https://www.facebook.com/etherlambos.io" class="btn btn-social-icon btn-facebook">
+		  	    <span class="fa fa-facebook"></span>
+		  	  </a>
+	
+		  	<a target="_blank" href="http://www.instagram.com/etherlambos" class="btn btn-social-icon btn-instagram">
+		  	    <span class="fa fa-instagram"></span>
+		  	  </a>
+			 <!-- 
+		  	  <a target="_blank" href="https://www.reddit.com/" class="btn btn-social-icon btn-reddit">
+		  	    <span class="fa fa-reddit"></span>
+		  	  </a>-->
+	  
+		  	  <a href="mailto:info@etherlambos.io" class="btn btn-social-icon btn-envelope">
+		  	    <span class="fa fa-envelope"></span>
+		  	  </a></p>
+		          <p class="elmain">&copy; 2018 ETHERLAMBOS &middot; <a href="disclaimer.html">Contact and Disclaimer</a> &middot;
+			<a style="" href="faq.html">F.A.Q.</a> 
+		  		</p>
+	  
+		        </footer>
+      
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://etherlambos.io/assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+	
+ <script src="js/DetectWeb3.js"></script>
+
+ <script src="js-ABI/EtherLambosCoreABI.js"></script>
+ <script src="js-ABI/MarketplaceABI.js"></script>
+ <script src="js-ABI/ServiceStationABI.js"></script>
+
+<script src="js/JSON_Garage.js%3Fver=8.1"></script>
+
+ <script src="js/Global.js%3Fver=8.1"></script>
+
+
+ <script src="js-DB/TuneOptionsDB.js%3Fver=8.1"></script>
+ <script src="js-DB/AttributesDB.js%3Fver=8.1"></script>	
+ <script src="js-DB/ReferralsDB.js%3Fver=8.1"></script>	
+ <script src="js-DB/DealerDB.js%3Fver=8.1"></script>	
+
+ <script src="js/User.js%3Fver=8.1"></script>
+ <script src='js-frontend/DisplayMenu.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayError.js%3Fver=8.1'></script>
+<script src='js/Dealer.js%3Fver=8.1'></script>
+ <script>
+	 
+	 
+	 var acc="";
+	 //0 = not yet queried 
+	 //1 = Web3 Account defined -> MM Logged in 
+	 //2 = Web3 Account undefined -> MM not logged in 
+	 //3 = Web3 undefined no MM detected
+	 var Web3Status=0;
+	 var Web3ChangeStatus=0;
+
+	
+
+	 var interval_x = 0;
+
+
+	   Init();	
+function Init()
+	   {	
+		//0 = not yet queried 
+		//1 = Web3 Account defined -> MM Logged in 
+		//2 = Web3 Account undefined -> MM not logged in 
+		//3 = Web3 undefined no MM detected
+		   //$("#modelView").hide();
+   		 if(Web3Status==3||Web3Status==0)
+   				{
+   					oneBuyGetMetamask();
+					$("#myGarage").hide();
+   					return;
+   				}
+		 if((Web3Status==1||Web3Status==2)&&network!=correctNetwork)
+		   		{	
+			   console.log("Wrong Network!"+network);
+			   //wrongNetworkStatus();
+			   oneBuyVisible();
+			   
+	    	  
+	    	    $("#myGarage").hide();
+			   
+			   return;
+		   		}
+	  
+	 		  
+			  
+		if(Web3Status==1||Web3Status==2)
+			  {
+				oneBuyVisible();
+				refreshDealerStockCount(5);
+		 	    document.getElementById("myGarage").href ="index.php?profile="+acc;
+		 	    if(Web3Status==1)
+					$("#myGarage").show();
+				else
+					$("#myGarage").hide();
+				return;
+			  }
+  		
+		
+		
+		
+		
+		
+
+	}
+
+function oneBuyVisible()
+	{
+		$("#one_buy").html("<a class='btn btn-primary elbutton' href='index.php%3Fdealer=One.html' role='button'>Buy One &raquo;</a>");
+	}
+function oneBuyGetMetamask()
+	{
+		$("#one_buy").html("<a class='btn btn-primary elbutton' target='_blank'href='faq.html' role='button'>How to get One &raquo;</a>");
+	}
+	
+
+</script>
+ 
+
+
+ 
+
+ 
+  </body>
+</html>

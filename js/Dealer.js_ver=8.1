@@ -1,0 +1,913 @@
+var marketPlaceOwner="";
+
+function refreshDealerStock(){
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+	function(v,callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+			var t = new Array();
+			if(!error){
+				console.log(result.length);
+				for(i=0;i<result.length;i++)
+					{
+						t[i]=result[i].c;
+						console.log(t[i]);
+					}
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+ 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens.length+" Tokens! Owner is: "+marketPlaceOwner);
+		
+		
+		async.map(tokens, getLambosDealer, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	
+	
+	var model_cnt = [];
+	
+	
+	//console.log("MarketplaceOwner:"+); 
+	
+	
+	for(i=0;i<result.length;i++)
+		{
+			
+				if(result[i][3]==marketPlaceOwner)
+					{
+
+						for(j=0;j<result.length;j++)
+							{
+								model_cnt[result[j][4]]=0;
+							}
+					}
+				
+			
+	
+		}
+	
+		for(i=0;i<result.length;i++)
+			{
+			
+					if(result[i][3]==marketPlaceOwner)
+						{
+
+							//for(j=0;j<result.length;j++)
+							//	{
+							//		if(result[j][4]==)
+									model_cnt[result[i][4]]++;
+							//	}
+						}
+				
+			
+	
+			}
+	
+	for(j=0;j<model_cnt.length;j++)
+		{
+			model_cnt[j]+=delta_cnt[j];
+			console.log("Model "+j+" : Count: "+model_cnt[j]); 
+		}
+	
+	DisplayDealer(model_cnt);
+	
+});
+}
+
+
+var getLambosDealer = function (t, doneCallback) {
+  // Call back with no error and the result of num * num
+	var lm = [];
+	
+	async.waterfall([
+		function(callback){
+			EtherLambos.getLambo(t,(error,resultLambo) => { 
+				if(!error){
+					lm[0]=new BigNumber(resultLambo[1]);
+					lm[1]=t;
+				}
+				else{
+					console.log(error);
+				}
+				callback(null, t);
+			});
+			
+		},
+		function(t,callback){
+			EtherLambos.getLamboModel(t,(error,resultLamboModel) => { 
+				if(!error){
+					lm[4]=resultLamboModel;
+				}
+				else{
+					console.log(error);
+				}
+				callback(null, t);
+			});
+			
+		},
+		function(t,callback){
+			
+			Marketplace.getSale(t,(error,resultSale) => { 
+							if(!error){
+								console.log(" price:"+resultSale[1]+" seller:"+resultSale[0]);
+								var r = [];
+								
+								lm[2]=new BigNumber(resultSale[1]);
+								lm[3]=resultSale[0];
+								/*if(lm[3]!=marketPlaceOwner)
+									lm[5]=false;
+								else
+									lm[5]=true;*/
+								console.log(lm);
+								
+								
+								return doneCallback(null, lm);
+							}
+							else{
+								console.log(error);
+							}
+						});
+		},
+		], function (err, result) {
+			return doneCallback(null, result);
+		});
+	
+};
+
+var getLambosFirstModel = function (t, doneCallback) {
+  // Call back with no error and the result of num * num
+	var lm = [];
+	
+	async.waterfall([
+		
+		function(callback){
+			EtherLambos.getLamboModel(t,(error,resultLamboModel) => { 
+				if(!error){
+					lm[0]=t;
+					if(resultLamboModel==quickDealerModel)
+						{
+							console.log("resultLamboModel: "+resultLamboModel);
+							console.log("quickDealerModel: "+quickDealerModel);
+							console.log("token: "+t);
+							lm[1]=true;	
+						}
+				}
+				else{
+					console.log(error);
+				}
+				
+				return doneCallback(null, lm);
+			});
+			
+		},
+		], function (err, result) {
+			return doneCallback(null, result);
+		});
+	
+};
+var quickDealerModel=0;
+var quickDealerModelStart=0;
+var quickDealerModelCount=0;
+function refreshDealerModelStock(dealerModel){
+	quickDealerModel=dealerModel;
+	for(var i=0;i<dealerDB.length;i++)
+		{
+			if(dealerDB[i].model==dealerModel)
+				{
+					quickDealerModelStart=dealerDB[i].start;
+					quickDealerModelCount=dealerDB[i].count;
+				}
+		}
+	
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+	function(v,callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+			var t = new Array();
+			if(!error){
+				console.log(result.length);
+				
+				for(var i=0,j=0;i<result.length;i++)
+					{
+						if(result[i].c>quickDealerModelStart&&result[i].c<(quickDealerModelStart+quickDealerModelCount))
+							{
+							t[j]=result[i].c;
+							//i=result.length;
+							console.log(t[j]);
+							j++;
+							}
+							
+						
+						
+					}
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+/* 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens.length+" Tokens! Owner is: "+marketPlaceOwner);
+		
+		
+		async.map(tokens, getLambosFirstModel, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+			var r_m=[];
+			r_m[0]=0;
+		  
+		  for(var i=0;i<r.length;i++)
+		  	{
+		  	if(r[i][1]==true)
+				{
+					r_m[0]=r[i][0];
+					//i=r.length;
+				}
+					
+		  	}
+		  
+		  console.log("Finished!");
+		  console.log(r);
+		  console.log(r_m);
+		  callback(null, r_m);
+		});
+		
+    },*/
+ 	function(tokens_model,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens_model.length+" Tokens!: "+tokens_model[0]);
+		
+		
+		async.map(tokens_model, getLambosDealer, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	
+	
+	var model_cnt = 0;
+	var model_tokens = [];
+	
+	var result_json = [];
+	
+	result_json[0]=JSON.parse(JSON.stringify(json_LamboInit));
+	var j=0;
+	for(var i=0;i<result.length;i++)
+		{
+			if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+				{
+					result_json[j]=JSON.parse(JSON.stringify(json_LamboInit));
+					j++;
+					console.log("Model Found");
+				}
+		}
+	
+	j=0;
+	for(i=0;i<result.length;i++)
+		{
+			
+				if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+					{
+						
+							//Build JSON Return:
+			
+							console.log("rCP: ASSIGN OBJECT: i: "+j);
+	
+							result_json[j]= JSON.parse(JSON.stringify(showLambo(result[i][0],result[i][4],0)));
+							result_json[j].token_id=result[i][1];
+							result_json[j].price=result[i][2];
+							result_json[j].tune_options=JSON.parse(JSON.stringify(showTuningKits(result[i][0],result[i][4]))).tune_options;
+							console.log("result_Lambo["+j+"]:");
+							console.log(JSON.stringify(result_json[j]));
+							console.log("BEFORE RETURN");	
+							j++;
+							//i=result.length;
+					}
+				
+			
+	
+		}
+
+	
+	
+	var ret_val=JSON.stringify(result_json);	
+	if(result_json.length==1 && result_json[0].token_id==0)
+		{
+			//DisplayCarNotFound();
+			DisplayOutOfStock(dealerModel);
+		}
+		else{
+			console.log(result_json.length+"<-l : t->"+result_json.token_id)
+			//DisplayDealerStockModels(result_json); //Display a List of all available 
+			DisplayDealerCarView(result_json[0]);
+		}
+	
+	
+});
+}
+
+
+function refreshGiftModelStock(dealerModel){
+	quickDealerModel=dealerModel;
+	for(var i=0;i<dealerDB.length;i++)
+		{
+			if(dealerDB[i].model==dealerModel)
+				{
+					quickDealerModelStart=dealerDB[i].start;
+					quickDealerModelCount=dealerDB[i].count;
+				}
+		}
+	
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+	function(v,callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+			var t = new Array();
+			if(!error){
+				console.log(result.length);
+				
+				for(var i=0;i<result.length;i++)
+					{
+						if(result[i].c>quickDealerModelStart&&result[i].c<(quickDealerModelStart+quickDealerModelCount))
+							{
+							t[0]=result[i].c;
+							i=result.length;
+							}
+							
+						
+						console.log(t[i]);
+					}
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+ 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens.length+" Tokens! Owner is: "+marketPlaceOwner);
+		
+		
+		async.map(tokens, getLambosFirstModel, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+			var r_m=[];
+			r_m[0]=0;
+		  
+		  for(var i=0;i<r.length;i++)
+		  	{
+		  	if(r[i][1]==true)
+				{
+					r_m[0]=r[i][0];
+					i=r.length;
+				}
+					
+		  	}
+		  
+		  console.log("Finished!");
+		  console.log(r);
+		  console.log(r_m);
+		  callback(null, r_m);
+		});
+		
+    },
+ 	function(tokens_model,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens_model.length+" Tokens!: "+tokens_model[0]);
+		
+		
+		async.map(tokens_model, getLambosDealer, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	
+	
+	var model_cnt = 0;
+	var model_tokens = [];
+	
+	var result_json = [];
+	
+	result_json[0]=JSON.parse(JSON.stringify(json_LamboInit));
+	var j=0;
+	for(var i=0;i<result.length;i++)
+		{
+			if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+				{
+					result_json[j]=JSON.parse(JSON.stringify(json_LamboInit));
+					j++;
+					console.log("Model Found");
+				}
+		}
+	
+	j=0;
+	for(i=0;i<result.length;i++)
+		{
+			
+				if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+					{
+						
+							//Build JSON Return:
+			
+							console.log("rCP: ASSIGN OBJECT: i: "+j);
+	
+							result_json[j]= JSON.parse(JSON.stringify(showLambo(result[i][0],result[i][4],0)));
+							result_json[j].token_id=result[i][1];
+							result_json[j].price=result[i][2];
+							result_json[j].tune_options=JSON.parse(JSON.stringify(showTuningKits(result[i][0],result[i][4]))).tune_options;
+							console.log("result_Lambo["+j+"]:");
+							console.log(JSON.stringify(result_json[j]));
+							console.log("BEFORE RETURN");	
+							j++;
+							//i=result.length;
+					}
+				
+			
+	
+		}
+
+	
+	
+	var ret_val=JSON.stringify(result_json);	
+	if(result_json.length==1 && result_json[0].token_id==0)
+		{
+			//DisplayCarNotFound();
+			DisplayOutOfStock(4);//dealerModel);
+		}
+		else{
+			console.log(result_json.length+"<-l : t->"+result_json.token_id)
+			//DisplayDealerStockModels(result_json); //Display a List of all available 
+			DisplayGiftCarView(result_json[0]);
+		}
+	
+	
+});
+}
+
+
+//Affiliate Sister Function:
+function refreshDealerAffiliateModelStock(dealerModel,code){
+	quickDealerModel=dealerModel;
+	for(var i=0;i<dealerDB.length;i++)
+		{
+			if(dealerDB[i].model==dealerModel)
+				{
+					quickDealerModelStart=dealerDB[i].start;
+					quickDealerModelCount=dealerDB[i].count;
+				}
+		}
+	
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+	function(v,callback){
+		var index=70;
+		
+	    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+			var t = new Array();
+			if(!error){
+				console.log(result.length);
+				
+				for(var i=0;i<result.length;i++)
+					{
+						if(result[i].c>quickDealerModelStart&&result[i].c<(quickDealerModelStart+quickDealerModelCount))
+							{
+							t[0]=result[i].c;
+							i=result.length;
+							}
+							
+						
+						console.log(t[i]);
+					}
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, t);
+		});
+		
+       
+    }  ,
+ 	function(tokens,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens.length+" Tokens! Owner is: "+marketPlaceOwner);
+		
+		
+		async.map(tokens, getLambosFirstModel, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+			var r_m=[];
+			r_m[0]=0;
+		  
+		  for(var i=0;i<r.length;i++)
+		  	{
+		  	if(r[i][1]==true)
+				{
+					r_m[0]=r[i][0];
+					i=r.length;
+				}
+					
+		  	}
+		  
+		  console.log("Finished!");
+		  console.log(r);
+		  console.log(r_m);
+		  callback(null, r_m);
+		});
+		
+    },
+ 	function(tokens_model,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+tokens_model.length+" Tokens!: "+tokens_model[0]);
+		
+		
+		async.map(tokens_model, getLambosDealer, function (err, r) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	var price_cut=0;
+	//check ReferralsDB
+	for(var i=0;i<referralsDB.length;i++)
+		{
+			if(referralsDB[i].code==code)
+				price_cut=referralsDB[i].pricecut;
+		}
+	
+	
+	var model_cnt = 0;
+	var model_tokens = [];
+	
+	var result_json = [];
+	
+	result_json[0]=JSON.parse(JSON.stringify(json_LamboInit));
+	var j=0;
+	for(var i=0;i<result.length;i++)
+		{
+			if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+				{
+					result_json[j]=JSON.parse(JSON.stringify(json_LamboInit));
+					j++;
+					console.log("Model Found");
+				}
+		}
+	
+	j=0;
+	for(i=0;i<result.length;i++)
+		{
+			
+				if(result[i][4]==dealerModel && result[i][3]==marketPlaceOwner)
+					{
+						
+							//Build JSON Return:
+			
+							console.log("rCP: ASSIGN OBJECT: i: "+j);
+	
+							result_json[j]= JSON.parse(JSON.stringify(showLambo(result[i][0],result[i][4],0)));
+							result_json[j].token_id=result[i][1];
+							result_json[j].price=result[i][2];
+							if(price_cut>0)
+								{
+									result_json[j].price=result_json[j].price-result_json[j].price*price_cut/10000;
+								}
+							
+							result_json[j].tune_options=JSON.parse(JSON.stringify(showTuningKits(result[i][0],result[i][4]))).tune_options;
+							console.log("result_Lambo["+j+"]:");
+							console.log(JSON.stringify(result_json[j]));
+							console.log("BEFORE RETURN");	
+							j++;
+							//i=result.length;
+					}
+				
+			
+	
+		}
+
+	
+	
+	var ret_val=JSON.stringify(result_json);	
+	if(result_json.length==1 && result_json[0].token_id==0)
+		{
+			//DisplayCarNotFound();
+			DisplayOutOfStock(dealerModel);
+		}
+		else{
+			console.log(result_json.length+"<-l : t->"+result_json.token_id)
+			//DisplayDealerStockModels(result_json); //Display a List of all available 
+			DisplayDealerAffiliateCarView(result_json[0],code);
+		}
+	
+	
+});
+}
+
+
+function refreshDealerLambo(l){
+async.waterfall([
+    function(callback){
+		var index=70;
+		
+	    Marketplace.owner((error,result) => {
+			var v ="";
+			if(!error){
+				console.log("OWNER: "+result);
+				marketPlaceOwner=result;
+				}
+			else
+				{
+				console.log(error);
+				}
+			callback(null, v);
+		});
+		
+       
+    } ,
+ 	function(v, callback){
+       	
+		EtherLambos.lamboIndexToOwner(l,(error,result) => { 
+			if(!error){
+				console.log("Ower: "+result+ " t: "+l);
+				var r = [];
+				r[0]=result;
+				r[1]=l;
+				
+				
+				callback(null, r);
+				
+			
+			}
+			else{
+				console.log("ERROR"+error);
+			}
+		});
+		  
+		
+    },
+ 	function(token,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Marketplace has "+token.length+" Tokens! Owner is: "+marketPlaceOwner);
+		var pseudo_array = [];
+		pseudo_array[0]=l;
+		
+		async.map(pseudo_array, getLambosDealer, function (err, r2) {
+		  // Square has been called on each of the numbers
+		  // so we're now done!
+			var r = [];
+			r[0]=token[0]; //Owner (should be Marketplace - verify later)
+			r[1]=l;			//Lambo token_id
+			//	2 price 3 seller 4 model
+			r[2]=r2[0][2];	  //price in wei
+			r[3]=r2[0][3];   //seller
+			r[4]=r2[0][4];	  //model
+			r[5]=r2[0][0];	  //attributes
+		  console.log("Finished!");
+		  console.log(r);
+		  callback(null, r);
+		});
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'   
+	 
+	var result_json;
+	
+		//init result_json
+		
+
+	result_json=JSON.parse(JSON.stringify(json_LamboInit));
+		
+	
+	if(result[5]!=0&&result[0]!=0&&result[3]==marketPlaceOwner) //attr!=0, Owner !=0, seller = marketPlaceOwner which is dealer
+		{
+			
+	
+					//Build JSON Return:
+			
+			console.log("rCP: ASSIGN OBJECT: ");
+			
+			result_json= JSON.parse(JSON.stringify(showLambo(result[5],result[4],0)));
+			result_json.token_id=result[1];
+			result_json.owner=result[0];
+			result_json.price=result[2];
+			console.log(result_json.owner);
+			result_json.tune_options=JSON.parse(JSON.stringify(showTuningKits(result[5],result[4]))).tune_options;
+			console.log("result_Lambo:");
+			console.log(JSON.stringify(result_json));
+
+			console.log("BEFORE RETURN");	
+
+			var ret_val=JSON.stringify(result_json);
+
+			DisplayDealerCarView(result_json); 
+		}
+	else{
+			DisplayCarNotFound();
+		}
+
+
+		
+});
+}
+
+
+function refreshDealerStockCount(mdl){
+	quickDealerModel=mdl;
+	for(var i=0;i<dealerDB.length;i++)
+		{
+			if(dealerDB[i].model==mdl)
+				{
+					quickDealerModelStart=dealerDB[i].start;
+					quickDealerModelCount=dealerDB[i].count;
+				}
+		}
+	
+		async.waterfall([
+		    function(callback){
+				var index=70;
+		
+			    Marketplace.owner((error,result) => {
+					var v ="";
+					if(!error){
+						console.log("OWNER: "+result);
+						marketPlaceOwner=result;
+						}
+					else
+						{
+						console.log(error);
+						}
+					callback(null, v);
+				});
+		
+       
+		    } ,
+			function(v,callback){
+				var index=70;
+		
+			    EtherLambos.tokensOfOwner(Marketplace.address, (error,result) => {
+					var count=0;
+					if(!error){
+						console.log(result.length);
+				
+						for(var i=0;i<result.length;i++)
+							{
+								if(result[i].c>quickDealerModelStart&&result[i].c<(quickDealerModelStart+quickDealerModelCount))
+									{
+										count++;
+									}
+							
+						
+								console.log("Count: "+count);
+							}
+						}
+					else
+						{
+						console.log(error);
+						}
+					callback(null, count);
+				});
+		
+       
+		    }  ,
+
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	
+	
+	
+	
+	if(result!=undefined)
+		$("#"+mdl+"_stock").html("&middot; Currently available Stock: "+(result+delta_cnt[mdl]));
+	else
+		$("#"+mdl+"_stock").html("&middot; Currently available Stock: 0");
+});
+}

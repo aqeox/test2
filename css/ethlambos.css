@@ -1,0 +1,641 @@
+/*
+#08090e   black
+#b63724   red
+#b38983	  red-light
+#fcbd36   gold
+#ffffff	  white
+*/
+body {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+ /* color: #5a5a5a;*/
+  color: #5c5c4f;
+  background-color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* unvisited link */
+a:link {
+    color: black;
+	text-decoration: underline;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+}
+
+/* mouse over link */
+a:hover {
+    color: darkgray;
+}
+
+/* selected link */
+a:active {
+    color: gray;
+}
+
+
+html {
+	background-color: #ffffff;
+}
+
+.text-muted {
+  /*color: #868e96 !important;*/
+  color: #b86cac !important;
+}
+
+.text-muted2 {
+  /*color: #868e96 !important;*/
+  color: #fcbd36 !important;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 0.75;
+  border-radius: 0.1rem;
+  transition: all 0.35s ease-in-out;
+}
+
+.sbt-primary {
+  /*color: #fff;
+  background-color: #007bff;*/
+  color: #000;
+  background-color: #fff;
+  border-color: #000;
+}
+
+.btn-primary {
+  /*color: #fff;
+  background-color: #007bff;*/
+  color: #fff;
+  background-color: #fff;
+  border-color: #000;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  /*background-color: #0069d9;
+   border-color: #0062cc;*/
+   background-color: #000;
+ 
+  border-color: #fff;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: #000;
+  border-color: #000;
+}
+
+.btn-primary:active, .btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: gray;
+  background-image: none;
+  border-color: gray;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #ffffff;
+ border-color: #000000;
+}
+
+.btn-secondary:hover {
+  color: #D3D3D3;
+  background-color: #D3D3D3;
+ border-color: #fff;
+ color: #000;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+  box-shadow: 0 0 0 3px rgba(134, 142, 150, 0.5);
+}
+
+.btn-secondary.disabled, .btn-secondary:disabled {
+  background-color: #868e96;
+  border-color: #868e96;
+}
+
+.btn-secondary:active, .btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: #727b84;
+  background-image: none;
+  border-color: #6c757d;
+}
+
+.bg-dark {
+  background-color: white !important;
+}
+
+.navbar-dark .navbar-brand {
+  color: black;
+}
+
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+  color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar-dark .navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.navbar-dark .navbar-nav .show > .nav-link,
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #5c5c4f;
+}
+
+.navbar-dark .navbar-toggler {
+  color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-dark .navbar-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+table {
+    border:none;
+    border-collapse: collapse;
+}
+
+table td,th {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+table td:first-child {
+    border-left: none;
+}
+
+table td:last-child {
+    border-right: none;
+}
+table th:first-child {
+    border-left: none;
+}
+
+table th:last-child {
+    border-right: none;
+}
+.eltop{
+width: 210px;
+height: 73;	
+}
+
+.brand {
+    position: absolute;
+    left: 45%;
+    margin-left: -50px !important;
+    display: block;
+}
+.mgarage {
+    position: absolute;
+    left: 29%;
+    margin-left: -100px !important;
+    display: block;
+}
+.mmarketplace {
+    position: absolute;
+    left: 29%;
+    margin-left: -30px !important;
+    display: block;
+}
+.mygarage, .mymarketplace{
+	width:60px;
+	height:60px;
+
+}
+.btnico{
+	width:20px;
+	height:20px;
+
+}
+.elhead{
+	text-align:center;
+	font-size:44px;
+}
+.elhead2{
+	text-align:center;
+	font-size:24px;
+}
+.elhead2-center{
+	font-size: 24px;
+	text-align:center;
+}
+.elmain{
+	font-size:14px;
+}
+.elmain-center{
+	text-align:center;
+	font-size:14px;
+}
+.elmain2-center{
+	text-align:center;
+	font-size:15px;
+	font-weight:bold;
+}
+.eltable-center{
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+	font-size:14px;
+	width:650px;
+	margin-left: 29%;
+}
+.eltable2-center{
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+	font-size:14px;
+	width:950px;
+}
+.eltable2-center{
+	text-align:center;
+	font-size:14px;
+	width:100%;
+}
+.eltable2-width{
+	width:250px;
+}
+.eltable2media-width{
+	width:500px;
+}
+.elbutton{
+	margin-right:auto;
+	margin-left:auto;
+	font-size:14px;
+	
+}
+.elbutton2{
+	margin-right:auto;
+	margin-left:auto;
+	font-size:20px;
+	
+}
+.picmain_top{
+width: 1100px;
+height: 380px;	
+
+}
+.picmain_top2{
+width: 600px;
+height: 207px;	
+display: block;
+margin-left:auto;
+margin-right:auto;
+}
+.bg-wide {
+  height: 7vh;
+  min-height: 430px;
+  /*background: url('http://etherlambos.io/img/EthereumHypercarConceptv2.png') center center no-repeat scroll;*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.bg-quad{
+	height: 550px;
+	width: 550px;
+}
+.bg-mm-faq{
+	height: 250px;
+	width: 250px;
+}
+.bg-creative-faq{
+	/*display:none;*/
+	height: 250px;
+	width: 350px;
+}
+.bg-quad-mobile{
+	display:none;
+}
+
+.tblspan100 {
+	display:inline-block; 
+	width: 100px;
+}
+.tblspan55 {
+	display:inline-block; 
+	width: 55px;
+}
+.tblspan70 {
+	display:inline-block; 
+	width: 70px;
+}
+.tblspan77 {
+	display:inline-block; 
+	width: 77px;
+}
+.tblspan65 {
+	display:inline-block; 
+	width: 65px;
+}
+.tblspan95 {
+	display:inline-block; 
+	width: 95px;
+}
+.tblspan53 {
+	display:inline-block; 
+	width: 53px;
+}
+.tblspan146 {
+	display:inline-block; 
+	width: 146px;
+}
+.tblspan99 {
+	display:inline-block; 
+	width: 99px;
+}
+.tdwidth{
+	width:550px;
+}
+.tblpadding{
+	padding: 55px;
+}
+.tbldesktop{
+	display:block;
+}
+.tblmobile{
+	display:none;
+}
+@media (max-width: 576px) {
+
+	.eltop{
+	width: 150px;
+	height: 50px;	
+	}
+	.picmain_top{
+	width: 350px;
+	height: 121px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+	.picmain_top2{
+	width: 350px;
+	height: 121px;	
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	}
+	.elhead{
+		font-size: 30px;
+	}
+	.elhead2{
+		font-size: 18px;
+	}
+	.elhead2-center{
+		font-size: 18px;
+		text-align:center;
+	}
+	.elmain{
+		font-size:10px;
+	}
+	.elmain-center{
+		text-align:center;
+		font-size:10px;
+	}
+	.elmain2-center{
+		text-align:center;
+		font-size:11px;
+		font-weight:bold;
+	}
+	.eltable-center{
+		margin-left: auto;
+		margin-right: auto;
+		text-align:center;
+		font-size:10px;
+		width:380px;
+		margin-left: 3%;
+	}
+	.eltable2-center{
+		margin-left: auto;
+		margin-right: auto;
+		text-align:center;
+		font-size:10px;
+		width:380px;
+	}
+	.eltable2-width{
+		width:95px;
+	}
+	.mediapic{
+		width:50%;
+		height: auto;
+	}
+	.bg-wide {
+	  height: 4vh;
+	  min-height: 130px;
+	  /*background: url('http://etherlambos.io/img/EthereumHypercarConceptv2.png') center center no-repeat scroll;*/
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  background-size: cover;
+	  -o-background-size: cover;
+	}
+	.bg-quad{
+		display:none;
+		height: 250px;
+		width: 250px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.bg-quad-mobile{
+		display:block;
+		height: 250px;
+		width: 250px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.elbutton{
+		margin-right:auto;
+		margin-left:auto;
+		font-size:11px;
+	
+	}
+	.bg-mm-faq{
+		display:none;
+		height: 250px;
+		width: 250px;
+	}
+	.bg-creative-faq{
+		display:none;
+		height: 100px;
+		width: 140px;
+	}
+	.tblspan100 {
+		display:inline-block; 
+		width: 10px;
+	}
+	.tblspan55 {
+		display:inline-block; 
+		width: 5px;
+	}
+	.tblspan70 {
+		display:inline-block; 
+		width: 7px;
+	}
+	.tblspan77 {
+		display:inline-block; 
+		width: 8px;
+	}
+	.tblspan65 {
+		display:inline-block; 
+		width: 6px;
+	}
+	.tblspan95 {
+		display:inline-block; 
+		width: 9px;
+	}
+	.tblspan53 {
+		display:inline-block; 
+		width: 5px;
+	}
+	.tblspan146 {
+		display:inline-block; 
+		width: 14px;
+	}
+	.tblspan99 {
+		display:inline-block; 
+		width: 9px;
+	}
+	.tblpadding{
+		padding: 5px;
+	}
+	.tdwidth{
+		width:180px;
+	}
+	.tbldesktop{
+		display:none;
+	}
+	.tblmobile{
+		display:block;
+	}
+}
+
+@media (max-width:  1015px) and (min-width: 578px) {
+	.picmain_top{
+	width: 550px;
+	height: 190px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+	
+	.bg-wide {
+	  height: 6vh;
+	  min-height: 330px;
+	  /*background: url('http://etherlambos.io/img/EthereumHypercarConceptv2.png') center center no-repeat scroll;*/
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  background-size: cover;
+	  -o-background-size: cover;
+	}
+	.bg-quad{
+		display:none;
+		height: 450px;
+		width: 450px;
+	}
+	.bg-quad-mobile{
+		display:block;
+		height: 450px;
+		width: 450px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.eltable-center{
+		width:550px;
+		margin-left: 0%;
+	}
+	.eltable2-center{
+		width:550px;
+		
+	}
+	.eltable2-width{
+		width:137px;
+	}
+	.bg-mm-faq{
+		display:none;
+		height: 250px;
+		width: 250px;
+	}
+	.bg-creative-faq{
+		display:none;
+		height: 250px;
+		width: 350px;
+	}
+	.tblspan100 {
+		display:inline-block; 
+		width: 100px;
+	}
+	.tblspan55 {
+		display:inline-block; 
+		width: 55px;
+	}
+	.tblspan70 {
+		display:inline-block; 
+		width: 70px;
+	}
+	.tblspan77 {
+		display:inline-block; 
+		width: 77px;
+	}
+	.tblspan65 {
+		display:inline-block; 
+		width: 65px;
+	}
+	.tblspan95 {
+		display:inline-block; 
+		width: 95px;
+	}
+	.tblspan53 {
+		display:inline-block; 
+		width: 53px;
+	}
+	.tblspan146 {
+		display:inline-block; 
+		width: 146px;
+	}
+	.tblspan99 {
+		display:inline-block; 
+		width: 99px;
+	}
+	.tdwidth{
+		width:450px;
+	}
+	.tblpadding{
+		padding: 35px;
+	}
+	.tbldesktop{
+		display:none;
+	}
+	.tblmobile{
+		display:block;
+	}
+}

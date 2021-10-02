@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	
+    
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="description" content="Etherlambos. Driving value.">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico%3Fver=1">
+
+    <title>Etherlambos</title>
+	 <link href="css/bootstrap-social.css" rel="stylesheet">
+	 <link href="css/font-awesome.css" rel="stylesheet">
+	
+    <!-- Bootstrap core CSS -->
+	
+    <link href="css/bootstrap.css" rel="stylesheet">
+ <link href="css/ethlambos.css" rel="stylesheet">
+ <link href="css/modal.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+	
+	  <link href="css/business-frontpage.css" rel="stylesheet">
+	  
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+      <!--<script src="./node_modules/web3/dist/web3.min.js"></script>-->
+	  <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+  	<script src="js-Lib/bignumber.min.js"></script>
+  	<script src="js-Lib/async.js"></script>
+
+  </head>
+  <body>
+
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+      <div  class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto"> 
+			
+		 	
+	   </ul>
+
+
+	  <div class="navbar-header">
+	    <a class="brand" style="margin-right:auto" href="index.html"><img class="eltop"  src="img/etherlambos_head.png" alt="Etherlambos Head" ></a>
+		<br>
+	  </div>
+	  <div class="navbar-link">
+		  <a class="mgarage" id="myGarage" href="index.php%3Fmockup=Satoshi.html#"><img class="mygarage" src="img/mygarage.png" alt="My Garage" ></a>
+	
+  </div>
+<div class="navbar-link">
+		 
+		<a class="mmarketplace" id="mymarketplace" href="index.php%3Fmarketplace=show.html"><img class="mymarketplace" src="img/marketplace.png" alt="Marketplace" ></a>
+	  </div> 
+	  
+	   <div id="priceForm" class="modal">
+	   	<div class="modal-content">
+	   	    <span class="close_sell">&times;</span>
+	   	    <p class='elmain'> Please set the price in ETH. Click 'Sell' to put your Etherlambo on the Market Place.</p>
+	   	   <p class='elmain'> <input type="number" placeholder="0.5" step="0.01" min="0" max="10" id="sellPrice" /></p>
+		
+	   		<p class='elmain'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='confirmSellButton' onclick='sell()'>Sell</button></p>
+	   	  </div> 
+	   </div>
+	   
+	   <div id="transferForm" class="modal">
+	   	<div class="modal-content">
+	   	    <span class="close_transfer">&times;</span>
+	   	    <p class='elmain'> Type or paste wallet address (please ensure that the recipient has a MetaMask or CipherBrowser wallet address):</p>
+	   	   <p class='elmain'> <input class="transferAddress" type="text" placeholder="e.g. 0xd19da302..." id="transerAddress" size="70"/></p>
+			<p class='elmain' id='transferMessage' style="color:red"></p>
+	   		<p class='elmain'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='confirmTransferButton' onclick='transfer()'>Gift Lambo</button></p>
+	   	  </div> 
+	   </div>
+ 	   <div id="shareLambo" class="modal">
+ 	   	<div class="modal-content">
+ 	   	    <span class="close_share">&times;</span>
+			 
+		      
+		         <!--<br>
+		  		<h3 class="elhead2">Share this beauty!</h3>
+		  	  	<br>-->
+   				 <p class='elmain-center'> <img  src="img/carNotFound.png" alt="Share" class="bg-share-dg" /></p>
+   		   
+				 <br>
+<p class='elmain-center'><input type="text" size="45" value="" id='copyShareLink' class="field left" readonly></p>
+<p class='elmain-center'><button id='btnShareLink' class='btn btn-secondary elbutton' style='color:black' role='button'  onclick='copyShareLink()'>Copy Link</button></p>
+<script>
+	function copyShareLink() {
+	  var copyText = document.getElementById("copyShareLink");
+	  copyText.select();
+	  document.execCommand("Copy");
+	  //alert("Copied the text: " + copyText.value);
+	  document.getElementById("btnShareLink").innerHTML="Copied!";
+	  setTimeout(function(){
+	    document.getElementById("btnShareLink").innerHTML="Copy Link";  
+	  }, 2000);
+	}
+	</script>
+	        	 <br>
+ 				 <p class='elmain-center'><a target="_blank" id="shareTwitter" class="btn btn-primary elbutton" href="index.php%3Fmockup=Satoshi.html" role="button">Share on Twitter &raquo;</a>
+ 				  &middot; <a target="_blank" id="shareFacebook" class="btn btn-primary elbutton" href="index.php%3Fmockup=Satoshi.html" role="button">Share on Facebook &raquo;</a></p>
+		     
+		
+ 	   	  </div> 
+ 	   </div>
+ 	   <div id="loginMetamask" class="modal">
+ 	   	<div class="modal-content">
+ 	   	    <span class="close_mm">&times;</span>
+			  <div class="row">
+		        <div class="col-lg-7">
+		         <br>
+		  		<h3 class="elhead2">Login to Metamask.</h3>
+		  	  	<br>
+				 <p class="elmain-center">To use EtherLambos, you will need to log in your MetaMask. Usually you can access Metamask in the upper right corner of your Browser.									
+		     	</p>
+
+	        	</div><!-- /.col-lg-4 -->
+				<div class="col-lg-5">
+				  <img  src="img/metamask.png" alt="Metamask" class="bg-mm-dg" />
+		          <p></p>
+		        </div><!-- /.col-lg-4 -->
+			</div>
+ 	   	  </div> 
+ 	   </div>
+      </div>
+	  
+    </nav>
+			 
+<!-- Header with Background Image -->
+    <header class="business-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12" id="header">
+			  
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+<span id="space"></span>
+
+ <div class="container marketing" style="display:none;" id="modelView">
+	       <!-- Three columns of text below the carousel -->
+	       <div class="row row-centered">
+	         <div class="col-lg-4 col-centered">
+          
+          
+		  
+	 		  <a href="vitalik.html"><img class="rounded-circle" src="img/vitalik.png" alt="Vitalik" width="350" height="200"></a>
+	 	  <p class="elmain-center"><a id="ModelVitalik" class="btn btn-primary elbutton" href="vitalik.html" role="button">View Model Vitalik &raquo;</a></p>
+	         </div><!-- /.col-lg-4 -->
+       
+	         <div class="col-lg-4">
+          
+  
+		  
+	 		 <a href="satoshi.html"> <img class="rounded-circle" src="img/satoshi.png" alt="Satoshi" width="350" height="200"></a>
+	    <p class="elmain-center"><a id="ModelSatoshi" class="btn btn-primary elbutton" href="satoshi.html" role="button">View Model Satoshi &raquo;</a></p>
+	         </div><!-- /.col-lg-4 -->
+		
+	         <div class="col-lg-4">
+          
+          
+		  
+	 		 <a href="monera.html"> <img class="rounded-circle" src="img/monera.png" alt="Car placeholder image" width="350" height="200"></a>
+	           <p class="elmain-center"><a id="ModelMonera" class="btn btn-primary elbutton" href="monera.html" role="button">View Model Monera &raquo;</a></p>
+           
+	         </div><!-- /.col-lg-4 -->
+	 	</div>
+	
+	 	<br><br><br><br>
+	
+	       <div class="row">
+	         <div class="col-lg-4">
+          
+     	 		 <a href="charlie.html"> <img class="rounded-circle" src="img/charlie.png" alt="Car placeholder image" width="350" height="200"></a>
+     	    <p class="elmain-center"><a id="ModelCharlie" class="btn btn-primary elbutton" href="charlie.html" role="button">View Model Charlie &raquo;</a></p>
+		  
+	 		  
+	           <p></p>
+           
+	         </div><!-- /.col-lg-4 -->
+	        <div class="col-lg-4">
+         
+         
+	  
+		  		 <a href="one.html"> <img class="rounded-circle" src="img/one.png" alt="Car placeholder image" width="350" height="200"></a>
+		     <p class="elmain-center"><a id="ModelOne" class="btn btn-primary elbutton" href="one.html" role="button">View Model One &raquo;</a></p>
+		        <p></p>
+   	 		 
+	          
+          
+	        </div><!-- /.col-lg-4 -->
+	         <div class="col-lg-4">
+          
+  
+		  <a href="trex.html">  <img class="rounded-circle" src="img/trex.png" alt="Car placeholder image" width="350" height="200"></a>
+	  <p class="elmain-center"><a id="ModelTrex" class="btn btn-primary elbutton" href="trex.html" role="button">Model T-Rex &raquo;</a></p>
+          <p></p>
+        
+	         </div><!-- /.col-lg-4 -->
+	 	</div>
+	 	<br><br><br><br>
+	      <hr class="featurette-divider" id="Partnerships" >
+	           <p class="elhead2-center">Build & Design your own Etherlambo!</p>
+	   	
+	         <div class="row">
+	           <div class="col-lg-4">
+     
+     
+  
+  
+	             <p></p>
+      
+	           </div><!-- /.col-lg-4 -->
+	   		<div class="col-lg-4">
+     
+	         <a href="mailto:info@etherlambos.io">  <img class="rounded-circle" src="img/carNotFound.png" alt="CoinShares" width="350" height="200"></a>
+	       <p class="elmain-center"><a id="contactUs" class="btn btn-primary elbutton" href="mailto:info@etherlambos.io" role="button">Contact us! &raquo;</a></p>
+	       
+	   		  
+	             <p></p>
+      
+	           </div><!-- /.col-lg-4 -->
+	          <div class="col-lg-4">
+    
+      
+	  
+	            <p></p>
+     
+	          </div><!-- /.col-lg-4 -->
+  
+	   	</div>
+  	 	<br><br>
+ 	      <hr class="featurette-divider" id="Partnerships" >
+ 	           <p class="elhead2-center">Partnerships</p>
+ 	   	      <br>
+			         <div class="row">
+			           <div class="col-lg-2">
+     
+     
+  
+  
+			             <p></p>
+      
+			           </div><!-- /.col-lg-4 -->
+			   		<div class="col-lg-2">
+     
+  	      
+	   		  
+  	             <p></p>
+      
+  	           </div><!-- /.col-lg-4 -->
+  	          <div class="col-lg-4">
+    
+        <a href="coinshares.html">  <img class="rounded-circle" src="img/coinshares.png" alt="CoinShares" width="350" height="200"></a>
+      <p class="elmain-center"><a id="buyCoinShares" class="btn btn-primary elbutton" href="coinshares.html" role="button">View Model CoinShares &raquo;</a></p>
+ 
+	  
+  	            <p></p>
+     
+  	          </div><!-- /.col-lg-4 -->
+ 	   	</div>
+	 <br><br>
+    <hr class="featurette-divider" id="Media" >
+         <p class="elhead2-center">Media</p>
+ 	      <br>
+
+      
+   
+		 
+         <div class="">
+ 			<br>
+ 		            
+					<br>
+					<div class="elmain2-center">
+					    <a href="https://news.bitcoin.com/this-week-in-bitcoin-hip-hop-and-you-dont-stop/" target="_blank"><img width="150" align="middle" hspace="20" src="img/media/bitcoindotcom.png"/></a>
+						<a href="https://bitcoinexchangeguide.com/etherlambos/" target="_blank"><img width="150" align="middle" hspace="20" src="img/media/bitcoinexchangeguide.png"/></a>
+						<a href="https://medium.com/@alexstargame/the-best-gaming-projects-on-blockchain-2018-5800f1aa8df5" target="_blank"><img width="150" align="middle" hspace="20" src="img/media/medium.png"/></a>
+					    <a href="https://www.trendingtopics.at/krypto-news-krypto-markets-etherlambos-bitkom-studie-buterin-traditional-assets/" target="_blank"><img width="150" align="middle" hspace="20" src="img/media/TrendingTopicsat.png"/></a>
+						
+							</div> <br>
+					<div class="elmain2-center">
+					    </div>
+		  </div>			
+					
+ 		  <br>
+	 	  <hr class="featurette-divider" id="roadmap" hidden>
+
+	       <div class="row featurette" hidden>
+	         <div class="col-md-12">
+	 			
+	         </div>
+       
+	       </div>
+ </div>
+ <div class="container marketing" id="tuneView">
+	 
+ </div>
+ <div class="container marketing" id="profileView">
+	 
+ </div>
+
+
+ <div class="container marketing" id="profileSaleView">
+	 
+ </div>
+  
+    
+
+
+<div class="container marketing" id="footer">
+	  
+ <hr class="featurette-divider" id="Footer" >
+
+      <!-- /END THE FEATURETTES -->
+
+
+        <!-- FOOTER -->
+        <footer>
+          <p class="float-right elmain"><a href="index.php%3Fmockup=Satoshi.html#">Back to top</a></p>
+  		<p class="float-right"> <a target="_blank" href="index.php%3Fmockup=Satoshi.html" class="btn btn-social-icon ">
+		    
+  		  </a></p>
+  		<p class="float-right  elmain"> <a target="_blank" href="http://twitter.com/Etherlambos" class="btn btn-social-icon btn-twitter">
+  		    <span class="fa fa-twitter"></span>
+  		  </a>
+  	 <a target="_blank" href="https://www.facebook.com/etherlambos.io" class="btn btn-social-icon btn-facebook">
+  	    <span class="fa fa-facebook"></span>
+  	  </a>
+	
+  	<a target="_blank" href="http://www.instagram.com/etherlambos" class="btn btn-social-icon btn-instagram">
+  	    <span class="fa fa-instagram"></span>
+  	  </a>
+	 <!-- 
+  	  <a target="_blank" href="https://www.reddit.com/" class="btn btn-social-icon btn-reddit">
+  	    <span class="fa fa-reddit"></span>
+  	  </a>-->
+	  
+  	  <a href="mailto:info@etherlambos.io" class="btn btn-social-icon btn-envelope">
+  	    <span class="fa fa-envelope"></span>
+  	  </a></p>
+          <p class="elmain">&copy; 2018 ETHERLAMBOS &middot; <a href="disclaimer.html">Contact and Disclaimer</a> &middot;
+	<a style="" href="faq.html">F.A.Q.</a> 
+  		</p>
+	  
+        </footer>
+      
+
+    </div><!-- /.container -->
+
+
+
+
+ <!--<script src="js/DetectWeb3.js"></script>-->
+
+ <script src="js-ABI/EtherLambosCoreABI.js"></script>
+ <script src="js-ABI/MarketplaceABI.js"></script>
+ <script src="js-ABI/ServiceStationABI.js"></script>
+
+ <script src="js/JSON_Garage.js"></script>
+
+ <script src="js/Global.js%3Fver=8.1"></script>
+
+
+ <script src="js-DB/TuneOptionsDB.js%3Fver=8.1"></script>
+ <script src="js-DB/AttributesDB.js%3Fver=8.1"></script>	
+ <script src="js-DB/ReferralsDB.js%3Fver=8.1"></script>	
+ <script src="js-DB/DealerDB.js%3Fver=8.1"></script>	
+
+ <script src="js/VisualizeLambo.js%3Fver=8.1"></script>
+ <!--<script src="js/Create.js"></script>
+ <script src="js/CreateCustomization.js"></script>-->
+ <script src="js/Garage.js%3Fver=8.1"></script>
+ <script src="js/Marketplace.js%3Fver=8.1"></script>
+ <script src="js/Tune.js%3Fver=8.1"></script>
+ <script src="js/User.js%3Fver=8.1"></script>
+ <script src="js/Modal.js%3Fver=8.1"></script>
+ <script src='js/Profile.js%3Fver=8.1'></script>
+ <script src='js/Dealer.js%3Fver=8.1'></script>
+
+ <script src='js-frontend/DisplayProfile.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayCar.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayDealer.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayError.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayMenu.js%3Fver=8.1'></script>
+ <script src='js-frontend/DisplayMarketplace.js%3Fver=8.1'></script>
+ 
+ <script src='js-Identicon/identicon.js'></script>
+ <script src='js-Identicon/pnglib.js'></script>
+ 
+  <script src='js/Etherscan.js'></script>
+ 	<script>
+ 		
+		
+		var dealer="";
+		var marketplace_php="";
+		var profile = "";
+		var lambo = "";
+		var l = "";
+		var mockup = "Satoshi";
+		var code = "";
+   	    var options = {
+   	      foreground: [255, 255, 255, 255],
+   	      background: [0, 0, 0, 255],
+   	      margin: 0.1,
+   	      size: 42,
+   	      format: 'svg'
+   	    };
+		
+		
+		//console.log(web3.isAddress("0x7147Be06EC9B697933Fasdf674ad46c0FA249423B17B"));
+	    //Init();
+	    
+	   // document.write('<img src="data:image/svg+xml;base64,' + data + '">');
+	   //Init();	
+function Init()
+	   {	
+		//0 = not yet queried 
+		//1 = Web3 Account defined -> MM Logged in 
+		//2 = Web3 Account undefined -> MM not logged in 
+		//3 = Web3 undefined no MM detected
+		   //$("#modelView").hide();
+		 if(mockup=="Vitalik")
+		   {
+			   menuMockupLamboLookup(1);
+			   return;
+		   }
+  		 if(mockup=="Satoshi")
+  		   {
+  			   menuMockupLamboLookup(2);
+  			   return;
+  		   }
+    	 if(mockup=="Monera")
+    		{
+    			menuMockupLamboLookup(3);
+    			return;
+    		}
+       	 if(mockup=="Charlie")
+       		{
+       			menuMockupLamboLookup(4);
+       			return;
+       		}  
+          if(mockup=="One")
+          	{
+          		menuMockupLamboLookup(5);
+          		return;
+          	}
+          if(mockup=="Trex")
+        	{
+        		menuMockupLamboLookup(7);
+        		return;
+        	}
+		 	if(Web3Status==3&&marketplace_php!="")
+		 			  {
+		 				modal_mm.style.display = "block";
+						menuNoMetamask();
+						//alert();
+		 				return;
+		 			  }  
+   		 if(Web3Status==3||Web3Status==0)
+   				{
+   					if(dealer=="CoinShares")
+						{
+						//menuGiftLookup(11);
+						window.location = "https://www.etherlambos.io/coinshares.html";
+						return;
+						}
+					if(lambo!="")
+					{
+						menuLamboLookupEtherscan();
+						return;
+					}
+					else{
+						menuNoMetamask();
+	   					return;
+					}
+					
+   				}
+		 	
+		
+		 if((Web3Status==1||Web3Status==2)&&network!=correctNetwork)
+		   		{	
+			   console.log("Wrong Network!"+network);
+			   //menuWrongNetwork();
+			   DisplayWrongNetwork();
+			   return;
+		   		}
+	  
+	 		  try{
+		 	       if(!web3.isAddress(profile))
+			   	   profile="";
+		   		   }
+		      catch(err) {
+				   console.log("Web3 is undefined");
+				   }
+		
+   		if(Web3Status==1&&marketplace_php=="show")
+   			  {
+   				menuMarketplaceLookup();
+   				return;
+   			  }
+ 		if(Web3Status==1&&marketplace_php!="")
+ 			  {
+ 				menuMarketplaceCarLookup(marketplace_php);
+ 				return;
+ 			  }  
+			  
+		if(Web3Status==1&&profile!="")
+			  {
+				menuProfileLookup();
+				return;
+			  }
+  		if(Web3Status==1&&lambo!="")
+  			  {
+  				menuLamboLookup();
+  				return;
+  			  }
+		if(Web3Status==1&&dealer=="all"&&l=="")
+			  {
+				menuDealerAllLookup();
+				//$("#modelView").html("<br>");  //For testing only
+				return;
+			  }
+  		if(Web3Status==1&&dealer!="")
+  			  {
+				
+				  if(code!="")
+				  	{
+						switch (dealer) {
+						    case "Satoshi":
+							 	menuDealerAffiliateLookup(2,code);
+					        	return;
+						    case "Vitalik":
+								menuDealerAffiliateLookup(1,code);
+						        return;
+						    case "Monera":
+								menuDealerAffiliateLookup(3,code);
+						        return;
+						    case "Charlie":
+								menuDealerAffiliateLookup(4,code);
+								return;
+						    case "One":
+								menuDealerAffiliateLookup(5,code);
+								return;
+						    case "Trex":
+								menuDealerAffiliateLookup(7,code);
+								return;
+						    case "all":
+						        menuDealerAllLookup();
+						        return;
+							default:
+						        menuDealerAllLookup();
+						        return;
+							}
+				  	}
+					else{
+						switch (dealer) {
+						    case "Satoshi":
+							 	menuDealerLookup(2);
+					        	return;
+						    case "Vitalik":
+								menuDealerLookup(1);
+						        return;
+						    case "Monera":
+								menuDealerLookup(3);
+						        return;
+						    case "Charlie":
+								menuDealerLookup(4);
+								return;
+						    case "One":
+								menuDealerLookup(5);
+								return;
+						    case "Trex":
+								menuDealerLookup(7);
+								return;
+						    case "all":
+						        menuDealerAllLookup();
+						        return;
+							//Testing	
+						    case "CoinShares":
+								menuGiftLookup(11);
+								return;
+								
+							default:
+						        menuDealerAllLookup();
+						        return;
+							}	
+						
+					}
+				
+			
+  			  }
+		
+			  
+		/*if(Web3Status==1&&dealer!=""&&l!="")
+			{
+			menuDealerModelsLookup(dealer,l);
+			return;
+			}*/
+			
+		if(Web3Status==1&&profile==""&&lambo==""&&dealer=="")
+			{
+				menuStartLookup();	
+				return;
+			}
+	   		if(Web3Status==2&&marketplace_php=="show")
+	   			  {
+	   				menuMarketplaceLookupLoggedOut();
+	   				return;
+	   			  }
+	 		if(Web3Status==2&&marketplace_php!="")
+	 			  {
+	 				menuMarketplaceCarLookupLoggedOut(marketplace_php);
+	 				return;
+	 			  }  
+		if(Web3Status==2&&profile!="")
+			  {
+				menuProfileLookupLoggedOut();
+				return;
+			  }
+  		if(Web3Status==2&&lambo!="")
+  			  {
+  				menuLamboLookupLoggedOut();
+  				return;
+  			  }
+		if(Web3Status==2&&dealer=="all"&&l=="")
+			  {
+				menuDealerAllLookupLoggedOut();
+				return;
+			  }
+  		if(Web3Status==2&&dealer!="")
+  			  {
+				  if(code!="")
+				  	{
+						switch (dealer) {
+						    case "Satoshi":
+							 	menuDealerAffiliateLookupLoggedOut(2,code);
+					        	return;
+						    case "Vitalik":
+								menuDealerAffiliateLookupLoggedOut(1,code);
+						        return;
+						    case "Monera":
+								menuDealerAffiliateLookupLoggedOut(3,code);
+						        return;
+						    case "Charlie":
+								menuDealerAffiliateLookupLoggedOut(4,code);
+								return;
+						    case "One":
+								menuDealerAffiliateLookupLoggedOut(5,code);
+								return;
+						    case "Trex":
+								menuDealerAffiliateLookupLoggedOut(7,code);
+								return;
+						    case "all":
+						        menuDealerAllLookupLoggedOut();
+						        return;
+							default:
+						        menuDealerAllLookupLoggedOut();
+						        return;
+							}
+				  	}
+					else{
+						switch (dealer) {
+						    case "Satoshi":
+							 	menuDealerLookupLoggedOut(2);
+					        	return;
+						    case "Vitalik":
+								menuDealerLookupLoggedOut(1);
+						        return;
+						    case "Monera":
+								menuDealerLookupLoggedOut(3);
+						        return;
+						    case "Charlie":
+								menuDealerLookupLoggedOut(4);
+								return;
+						    case "One":
+								menuDealerLookupLoggedOut(5);
+						        return;
+						    case "Trex":
+								menuDealerLookupLoggedOut(7);
+						        return;
+						    case "all":
+						        menuDealerAllLookupLoggedOut();
+						        return;
+								
+							//Testing	
+						    case "CoinShares":
+								menuGiftLookupLoggedOut(11);
+								return;
+								
+							default:
+						        menuDealerAllLookupLoggedOut();
+						        return;
+							}
+						
+					}
+				
+				
+				
+				
+		
+  			  }
+		  
+		/*if(Web3Status==2&&dealer!=""&&l!="")
+			{
+			menuDealerModelsLookupLoggedOut(dealer,l);
+			return;
+			}*/
+		
+		if(Web3Status==2&&profile==""&&lambo==""&&dealer=="")
+			{
+			menuStartLookupLoggedOut();	
+			return;
+			}
+			
+		
+		
+
+	}
+	
+	
+ 		</script> 
+	
+  
+  </body>
+</html>

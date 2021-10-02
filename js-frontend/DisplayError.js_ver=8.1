@@ -1,0 +1,178 @@
+
+var gwidth=350;
+var gheight=200;
+var car_link='index.php?lambo=';
+
+function wrongNetworkStatus(){
+
+			$("#Status").html("<br><br><br><p class='elmain-center'><a class='btn btn-primary elbutton' target='_blank' href='wrongNetwork.html' role='button' style='bg-color:red'>You're in the wrong Network - Click here to find out more &raquo;</a></p>");
+
+			}
+
+function DisplayWrongNetwork(){
+	
+	var car_tml="";
+	
+	console.log("DisplayWrongNetworkPage");
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<p class='elhead'>You're in the wrong Network.</p><br>";
+	car_tml+="<p class='elhead2-center'>Simply open MetaMask and switch over to the Main Ethereum Network.</p><br><br>";
+	//car_tml+="   </div>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	//car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<img style='display:block;margin-left:auto;margin-right:auto;' width='304' height='358' src='img/main-network.png'>";
+
+	
+	//car_tml+="</svg>";	
+	car_tml+="   </div>";
+	
+	
+	car_tml+="   </div>";
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	$("#modelView").hide();	
+	$("#header").hide();
+	$("#space").hide();	
+	$("#myGarage").hide();
+	
+}
+function DisplayOutOfStock(dealerModel){
+	var car_tml="";
+	
+	console.log("DisplayCarNotFound");
+	var modelName="";
+	for(var i=0;i<modelsDB.length;i++)
+		{
+			if(dealerModel==modelsDB[i].model)
+				modelName=modelsDB[i].name;
+		}
+	
+	car_tml+=" <div class='row'>";
+
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	
+	//car_tml+="<p class='elhead2-center'></p><br><br>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<image style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"' xlink:href='img/"+modelName+"_OutOfStock.png'/>";
+
+	
+	car_tml+="</svg>";	
+	car_tml+="   </div>";
+	
+    car_tml+="<p class='elhead2'>"+modelName+" is out of Stock!</p><br>";
+	car_tml+="   </div>";
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+}
+function DisplayCarNotFound(){
+	
+	var car_tml="";
+	
+	console.log("DisplayCarNotFound");
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<image style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"' xlink:href='img/carNotFound.png'/>";
+
+	
+	car_tml+="</svg>";	
+	car_tml+="   </div>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<p class='elhead2-center'>We could not find the requested Lambo :(</p>";
+	car_tml+="   </div>";
+	car_tml+="   </div>";
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}
+
+function DisplayPleaseLogIn(){
+	
+	var car_tml="";
+	
+	console.log("DisplayPleaseLogIn");
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+=
+				 "<div class='row'>"+
+			       " <div class='col-lg-7'>"+
+			         " <br><br><br>"+
+			  		"<h3 class='elhead2'>Log In Metamask.</h3>"+
+			  	  "	<br>"+
+					 "<p class='elmain-center'>To use EtherLambos, you will need to log in to your Metamask"+
+					"</p>"+
+
+		        	"</div>"+
+					"<div class='col-lg-5'>"+
+					  "<img  src='img/metamask.png' alt='Metamask' class='bg-mm-faq'>"+
+			         " <p></p>"+
+			       " </div>"+
+					  "</div>";
+			   
+	car_tml+="   </div>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	
+	car_tml+="   </div>";
+	car_tml+="   </div>";
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}
+
+
+function DisplayGetMetamask(){
+	
+	var car_tml="";
+	
+	console.log("DisplayPleaseLogIn");
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+=
+				 "<div class='row'>"+
+			       " <div class='col-lg-7'>"+
+			         " <br><br><br>"+
+			  		"<h3 class='elhead2'>Get Metamask.</h3>"+
+			  	  "	<br>"+
+					 "<p class='elmain-center'>To use EtherLambos, you will need to install MetaMask, a digital wallet. 									You will need to put money in it to make your first purchase."+
+					"Note: A digital wallet like MetaMask acts like a bank account—treat it with respect and make sure you don’t forget your password or the seed words."+
+			     	"</p>"+
+
+		        	"</div>"+
+					"<div class='col-lg-5'>"+
+					  "<a target='_blank' href='https://metamask.io/'><img  src='img/metamask.png' alt='Metamask' class='bg-mm-faq'></a>"+
+			         " <p></p>"+
+			       " </div>"+
+					  "</div>";
+			   
+	car_tml+="   </div>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	
+	car_tml+="   </div>";
+	car_tml+="   </div>";
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}

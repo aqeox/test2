@@ -1,0 +1,203 @@
+function refreshTuneCar(){
+async.waterfall([
+    function(callback){
+			var t=tokenSelectedForTuning;
+			callback(null, t);
+		
+		
+       
+    }  ,
+ 	function(token,  callback){
+        // arg1 now equals 'one' and arg2 now equals 'two'
+		console.log("Token #"+token+" selected for tuning!");
+		//$("#tokensOfOwner").html("You have "+tokens.length+" Cars!");
+		
+		EtherLambos.getLambo(token,(error,result) => { 
+			if(!error){
+				console.log("GET LAMBO: "+result[1].c+ " t: "+token);
+				var r = [];
+				r[0] = new BigNumber(result[1]);
+				r[1]=token;
+
+			
+				EtherLambos.getLamboModel(token,(error,result_model) => { 
+					if(!error){
+						console.log("GET LAMBO MODEL: "+result_model.c);
+						var r2 = [];
+						r2[0]=r[0];
+						r2[1]=r[1];
+						r2[2]=result_model;
+						//console.log(r);
+						return callback(null, r2);
+					}
+					else{
+						console.log("ERROR"+error);
+					}
+				});
+			
+			}
+			else{
+				console.log("ERROR"+error);
+			}
+		});
+		  
+		
+    },
+    
+], function (err, result) {
+	console.log("res: "+result);  
+   // result now equals 'done'    
+	
+	refreshTuneOptions();
+});
+}
+
+function tuneCarOption(token){
+	var tuneOptions = document.getElementById("TuneOptions");
+	var selectedOption = tuneOptions.options[tuneOptions.selectedIndex].value;
+	console.log("Selected Option:"+selectedOption+" token:"+token);
+	var tuneOptionPrice = document.getElementById("TuneOptionPrice");
+	var priceInWei=tuneOptionPrice.value;
+	console.log("Option Price:"+priceInWei);
+	if(selectedOption!=undefined)
+	{
+	    ServiceStation.tuneLambo(token,selectedOption,{from: acc, gasPrice: gPrice,gas: g,value: priceInWei}, (error,result) => {
+	    	if(error){
+	    		//$("#loader").hide();
+				console.log(err);
+	    	}
+			else{
+			
+			}
+		});
+	}
+}
+
+function refreshTuneOptions(){
+
+	async.waterfall([
+	    function(callback){
+				var t=tokenSelectedForTuning;
+				
+			    EtherLambos.getLamboModel(t, (error,result) => {
+					
+					if(!error){
+						console.log("getLamboModel:"+result);
+						}
+					else
+						{
+						console.log(error);
+						}
+					callback(null, result);
+				});
+		
+       
+	    }  ,
+	 	function(model,  callback){
+	        // arg1 now equals 'one' and arg2 now equals 'two'
+			console.log("Retrieve tune options for "+model+" ");
+			//$("#tokensOfOwner").html("You have "+tokens.length+" Cars!");
+			var options = new Array();
+			ServiceStation.getOptionsForModel(model,(error,result) => { 
+				if(!error){
+					for(i=0;i<result.length;i++)
+						{
+							options[i]=result[i].c;
+							console.log(options[i]);
+						}
+					}
+					else{
+						console.log(error);
+					}
+					callback(null, options);
+			});
+		  
+		
+	    },
+    
+	], function (err, result) {
+		console.log("Options: "+result);  
+	   // result now equals 'done'    
+		var dataArray = [];
+		dataArray=result;
+		var selectbox = $('#TuneOptions');
+		selectbox.empty();
+		if(dataArray[1]!=0)
+			{
+	 	       dataArray.forEach(function (data) {
+				   if(tuneOptionsDB[data]!=undefined)
+	 	           		selectbox.append("<option value="+data+">" + tuneOptionsDB[data].title + "</option>");
+	 	       });
+			}
+		
+		refreshSelectedTuneOptions();  
+		if(document.getElementById("tuneView").style.display=="none")
+			$("#tuneView").show();
+		else
+		{
+			$("#tuneView").hide();
+			for(var i=0;i<tuneOptionsDB.length;i++)
+				$("#tune_"+i).hide();
+		}
+			
+	});
+	
+}
+function refreshSelectedTuneOptions(){
+	try{
+		var tuneOptions = document.getElementById("TuneOptions");
+		var selectedOption = tuneOptions.options[tuneOptions.selectedIndex].value;
+		console.log("Selected Option:"+selectedOption);
+		
+		for(var i=0;i<tuneOptionsDB.length;i++)
+			$("#tune_"+i).hide();
+		
+		//SPECIAL FOR SATOSHI REAR WING AGAINST LARGE REAR WING = TUNE OPTION 18
+		if(selectedOption==18)
+			{
+			$("#satoshi_rearwing").hide();	
+			}
+		else{
+			$("#satoshi_rearwing").show()
+			}
+		
+		$("#tune_"+selectedOption).show();
+		async.waterfall([
+			 	function(callback){
+			        // arg1 now equals 'one' and arg2 now equals 'two'
+					console.log("Retrieve Price for "+selectedOption+" ");
+					//$("#tokensOfOwner").html("You have "+tokens.length+" Cars!");
+					
+					ServiceStation.getOption(selectedOption,(error,result) => { 
+						var price = new BigNumber('0');
+						if(!error){
+							
+									price=result[4];
+									console.log(result);
+									console.log(price);
+								}
+							else{
+								console.log(error);
+								}
+							callback(null, price);
+					});
+		  
+		
+			    },
+    
+			], function (err, result) {
+				console.log("Price: "+result+" ETH");  
+				var priceInEther=web3.fromWei(result, 'ether');
+				$("#TuneOptionDescription").html("<p>"+tuneOptionsDB[selectedOption].description+"</p>");
+				$("#TuneOptionPrice").html(" "+priceInEther+" ETH"); 
+				$("#TuneOptionPrice").val(result); 
+			});
+	
+		}
+	catch(err)
+		{
+			console.log("no Options ready");
+			$("#TuneOptionDescription").html("<p>No Options available</p>");
+		}
+	
+} 

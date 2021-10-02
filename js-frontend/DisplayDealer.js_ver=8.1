@@ -1,0 +1,857 @@
+
+var gwidth=350;
+var gheight=200;
+var dealer_link='index.php?dealer=';
+var dealerLambo_link='&l=';
+
+function DisplayDealer(model_cnt){
+	
+	var car_tml="";
+	
+	console.log("DisplayDealer");
+	console.log(model_cnt);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	
+	
+	
+	
+	var i=0;
+	var r=dealerDB.length/3;
+	var columns=0;
+	
+	r=Math.round(r, 0)
+	if(dealerDB.length%3>0&&dealerDB.length>3)
+		{
+			r+=1;	
+		}
+		if(r<1)
+			r=1;
+		console.log("Rows:"+r);
+	for(var k=0;k<r;k++)
+		{
+		car_tml+="<div class='row row-centered'>";
+		
+		for(columns=0;i<dealerDB.length&&columns<3;i++,columns++)
+			{
+				car_tml+=" <div class='col-lg-4 col-centered'>";
+				car_tml+="<a href='"+dealer_link+dealerDB[i].name+"'>";
+				car_tml+="<svg width='"+gwidth+"' height='"+gheight+"'><rect id='bg' x='0' y='0' width='"+gwidth+"' height='"+gheight+"' fill='blue' opacity='0' />";
+			
+				car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+dealerDB[i].path+"'/>";
+			
+				
+				car_tml+="</svg>";	
+				car_tml+="</a>";
+				var available=0;
+				if(Number.isInteger(model_cnt[dealerDB[i].model])) 
+					 available=model_cnt[dealerDB[i].model];
+				
+				car_tml+="<p class='elmain-center'>"+dealerDB[i].name+"<br> Limited Supply: "+dealerDB[i].supply+"<br> Available: "+ available+"</p>";
+				//car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneButton_"+i+"' onclick='tuneCar("+result_json[i].token_id+")'>Tune Car</button></p><br>"; //
+				
+				car_tml+=" </div>";
+			}
+	    car_tml+=" </div>";
+	}
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}
+
+
+function DisplayDealerStockModels(result_json){
+	
+	var car_tml="";
+	
+	console.log("DisplayDealerStockModel");
+	console.log(result_json);
+	
+	
+	
+	var i=0;
+	var r=result_json.length/3;
+	var columns=0;
+	
+	r=Math.round(r, 0)
+	if(result_json.length%3>0&&result_json.length>3)
+		{
+			r+=1;	
+		}
+		if(r<1)
+			r=1;
+		console.log("Rows:"+r);
+	for(var k=0;k<r;k++)
+		{
+		car_tml+="<div class='row row-centered'>";
+		
+		for(columns=0;i<result_json.length&&columns<3;i++,columns++)
+			{
+				car_tml+=" <div class='col-lg-4 col-centered'>";
+				car_tml+="<a href='"+dealer_link+result_json[i].model+dealerLambo_link+result_json[i].token_id+"'>";
+				car_tml+="<svg width='"+gwidth+"' height='"+gheight+"'><rect id='bg' x='0' y='0' width='"+gwidth+"' height='"+gheight+"' fill='blue' opacity='0' />";
+			
+				car_tml+="<image style='display:block' width='"+gwidth+"' height='"+gheight+"' xlink:href='"+result_json[i].svg_components.base+"'/>";
+			
+				//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+				for(var j=0;j<result_json[i].svg_components.options.length;j++)
+					{
+					car_tml+="<image id='"+result_json[i].svg_components.ids[j]+"' style='display:block' width='"+gwidth+"' height='"+gheight+"'"+
+					"xlink:href='"+result_json[i].svg_components.options[j]+"'/>";
+				
+					}
+				car_tml+="</svg>";	
+				car_tml+="</a>";
+				car_tml+="<p class='elmain-center'>"+result_json[i].model+" no. "+result_json[i].number+"</p>";
+				//car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='tuneButton_"+i+"' onclick='tuneCar("+result_json[i].token_id+")'>Tune Car</button></p><br>"; //
+				
+				car_tml+=" </div>";
+			}
+	    car_tml+=" </div>";
+	}
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}
+
+//old w:700 h:400
+var gwidth_carView=1000;
+var gheight_carView=376;
+var car_link_carView='index.php?lambo=';
+var profile_link_carView='index.php?profile=';
+
+function DisplayDealerCarView(result_json){
+	
+	var car_tml="";
+	
+	console.log("DisplayDealerCarView");
+	console.log(result_json);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	if(window.mobilecheck()==true) {
+		gwidth_carView=315;
+		gheight_carView=120;
+	   } else {
+   		gwidth_carView=1000;
+   		gheight_carView=376;
+	   }
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<image style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"' xlink:href='"+result_json.svg_components.base+"'/>";
+
+	//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+	for(var j=0;j<result_json.svg_components.options.length;j++)
+		{
+		car_tml+="<image id='"+result_json.svg_components.ids[j]+"' style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"'"+
+		"xlink:href='"+result_json.svg_components.options[j]+"'/>";
+	
+		}
+	car_tml+="</svg>";	
+	car_tml+="<p class='elmain2-center'>Serial No.: "+result_json.number+"</p><br><br>";
+	car_tml+="   </div>";
+	
+	
+	
+	car_tml+=" <div class='col-lg-12'>";
+	
+	//Display price
+	
+    car_tml+="<p class='elmain2-center' id='dealerPrice' > Price: "+web3.fromWei(result_json.price,'ether')+" ETH</p>";
+	//car_tml+="<p class='elmain2-center' id='dealerPrice' > Referral-Code: <input type='' placeholder='' id='buyReferral_"+result_json.token_id+"' />"+"</p>";
+	 //car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCarReferral("+result_json.token_id+","+result_json.price+","+result_json.token_id+")'>Buy Car</button>";
+	 car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton2' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCar("+result_json.token_id+","+result_json.price+")'>Buy Car</button>";
+	 car_tml+="<br><br><br>";
+	
+	
+	
+	
+	//Pre-Fill Attributes
+	var pf_speed,pf_power,pf_acceleration,pf_cylinder,pf_litre,pf_turbo,pf_chassis,pf_aerodynamics="",pf_colour;
+	for(var k=0;k<result_json.car_specs.name.length;k++)
+ 		{
+			switch (result_json.car_specs.name[k]) {
+			    case "Speed":
+			        pf_speed=result_json.car_specs.spec[k];
+			        break;
+			    case "Power":
+			        pf_power=result_json.car_specs.spec[k];
+			        break;
+			    case "Acceleration":
+			        pf_acceleration=result_json.car_specs.spec[k];
+			        break;
+			    case "Cylinder":
+			        pf_cylinder=result_json.car_specs.spec[k];
+					if(pf_cylinder=="0 V")
+						pf_cylinder="";
+			        break;
+			    case "Litre":
+			        pf_litre=result_json.car_specs.spec[k];
+					if(pf_litre=="0.0 litre")
+						pf_litre="";
+			        break;
+			    case "Turbo":
+			        pf_turbo=result_json.car_specs.spec[k];
+			        break;
+			    case "Chassis":
+			        pf_chassis=result_json.car_specs.spec[k];
+			        break;
+			    case "Aerodynamics":
+			        pf_aerodynamics=result_json.car_specs.spec[k];
+			        break;
+			    case "Colour":
+			        pf_colour=result_json.car_specs.spec[k];
+			        break;
+			}
+	
+ 		}	
+		
+	//End Pre-Fill Attributes
+	
+	
+    car_tml+="<table class='eltable3-center tbldesktop' style='width:100%;'>"+
+     		"<tr>"+
+       "<th height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+      "</tr> "+
+      "<tr>"+
+        "<td height='30'  class='elmain tdwidth' >Engine:  <span class='tblspan100'></span>"+pf_litre+" "+pf_turbo+" "+pf_cylinder+"</td>"+
+	"<td rowspan='8' class='elmain-center tblpadding'> "; 
+  		
+		//Add Upgrades (if any)
+		for(var k=0;k<result_json.tune_options.name.length;k++)
+	 		{
+				if(result_json.tune_options.name[k]!="")
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+					car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+					car_tml+=result_json.tune_options.name[k];
+					for(var l=40;l>result_json.tune_options.name[k].length;l--)
+						car_tml+= "&nbsp; "
+					car_tml+="</p>";
+					//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+				}
+				else
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+					//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+				}
+			
+	 		}
+  		//End Add Upgrades 
+			
+			car_tml+="</td>";
+			car_tml+="</tr>";
+			
+			
+			
+     car_tml+="<tr>"+
+        "<td height='30' class='elmain'>Max. Power:<span class='tblspan70'></span>"+pf_power+"</td>"+
+
+
+      "</tr>"+
+     "<tr>"+
+        "<td height='30' class='elmain'>Top Speed:<span class='tblspan77'></span>"+pf_speed+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Acceleration:<span class='tblspan65'></span>0 to 100 km/h in "+pf_acceleration+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Chassis:<span class='tblspan95'></span>"+pf_chassis+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></span>"+pf_aerodynamics.substring(0, 53)+"<br> <span class='tblspan146'></span>"+pf_aerodynamics.substring(53, 100)+"</td>"+
+     " </tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Colour:<span class='tblspan99'></span>"+pf_colour+"</td>"+
+      "</tr>"+
+    "</table>"+
+ 
+  	  "<table class='eltable3-center tblmobile' style='width:100%;'>"+
+  	   "<tr>"+
+  	     "<th colspan='2' height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+		 
+
+  	    "</tr>"+ 
+  	    "<tr>"+
+  	      "<td height='30'  class='elmain tdwidth' >Engine: </td>"+
+  		  "<td class='elmain-center tdwidth'> "+pf_litre+" "+pf_turbo+"<br>"+pf_cylinder+"</td>"+
+  	"</td>"+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Max. Power:</td>"+
+  "<td class='elmain-center'> "+pf_power+"</td>"+
+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Top Speed:</td>"+
+  		  "<td class='elmain-center'> "+pf_speed+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Acceleration:</td>"+
+  		  "<td class='elmain-center'> 0 to 100 km/h in "+pf_acceleration+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Chassis:</td>"+
+  		  "<td class='elmain-center'> "+pf_chassis+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></td>"+
+  		  "<td class='elmain-center'> "+pf_aerodynamics.substring(0, 53)+"<br>  "+pf_aerodynamics.substring(53, 100)+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Colour:</td>"+
+  		  "<td class='elmain-center'> "+pf_colour+"</td>"+
+  	    "</tr>"+
+  	  "</table>	"+
+	  
+	 
+  	    "<table class='eltable3-center tblmobile' style='margin-left:10%;width:100%;'>"+
+  			 "<br>"+
+  	     "<tr>"+
+  	  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+  	      "</tr>"+ 
+  	      "<tr>"+
+	      
+			"<td class='elmain-center tblpadding' >";
+			//Add Upgrades (if any)
+			for(var k=0;k<result_json.tune_options.name.length;k++)
+		 		{
+					if(result_json.tune_options.name[k]!="")
+					{
+						car_tml+="<p class='elmain'><img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+						car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+						car_tml+=result_json.tune_options.name[k];
+						//for(var l=30;l>result_json.tune_options.name[k].length;l--)
+						//	car_tml+= "&nbsp; "
+						car_tml+="</p>";
+						//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+					}
+					else
+					{
+						car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+						//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+					}
+			
+		 		}
+			car_tml+="</td>"+"</tr>"+
+    "</table>";
+	
+	
+	 	
+	
+	 car_tml+="    <p></p>";
+	 car_tml+="    </div>";
+     car_tml+=" </div>   ";
+	
+ 	
+	
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+	
+	
+	
+}
+
+
+function DisplayGiftCarView(result_json){
+	
+	var car_tml="";
+	
+	console.log("DisplayGiftCarView");
+	console.log(result_json);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	if(window.mobilecheck()==true) {
+		gwidth_carView=315;
+		gheight_carView=120;
+	   } else {
+   		gwidth_carView=1000;
+   		gheight_carView=376;
+	   }
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<image style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"' xlink:href='"+result_json.svg_components.base+"'/>";
+
+	//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+	for(var j=0;j<result_json.svg_components.options.length;j++)
+		{
+		car_tml+="<image id='"+result_json.svg_components.ids[j]+"' style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"'"+
+		"xlink:href='"+result_json.svg_components.options[j]+"'/>";
+	
+		}
+	car_tml+="</svg>";	
+	car_tml+="<p class='elmain2-center'>Serial No.: "+result_json.number+"</p><br><br>";
+	car_tml+="   </div>";
+	
+	
+	
+	car_tml+=" <div class='col-lg-12'>";
+	
+	//Display price
+	
+    //car_tml+="<p class='elmain2-center' id='dealerPrice' > Price: "+web3.fromWei(result_json.price,'ether')+" ETH</p>";
+	//car_tml+="<p class='elmain2-center' id='dealerPrice' > Referral-Code: <input type='' placeholder='' id='buyReferral_"+result_json.token_id+"' />"+"</p>";
+	 //car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCarReferral("+result_json.token_id+","+result_json.price+","+result_json.token_id+")'>Buy Car</button>";
+	 car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton2' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCar("+result_json.token_id+","+result_json.price+")'>Get Car</button>";
+	 car_tml+="<br><br><br>";
+	
+	
+	
+	
+	//Pre-Fill Attributes
+	var pf_speed,pf_power,pf_acceleration,pf_cylinder,pf_litre,pf_turbo,pf_chassis,pf_aerodynamics="",pf_colour;
+	for(var k=0;k<result_json.car_specs.name.length;k++)
+ 		{
+			switch (result_json.car_specs.name[k]) {
+			    case "Speed":
+			        pf_speed=result_json.car_specs.spec[k];
+			        break;
+			    case "Power":
+			        pf_power=result_json.car_specs.spec[k];
+			        break;
+			    case "Acceleration":
+			        pf_acceleration=result_json.car_specs.spec[k];
+			        break;
+			    case "Cylinder":
+			        pf_cylinder=result_json.car_specs.spec[k];
+			        break;
+			    case "Litre":
+			        pf_litre=result_json.car_specs.spec[k];
+			        break;
+			    case "Turbo":
+			        pf_turbo=result_json.car_specs.spec[k];
+			        break;
+			    case "Chassis":
+			        pf_chassis=result_json.car_specs.spec[k];
+			        break;
+			    case "Aerodynamics":
+			        pf_aerodynamics=result_json.car_specs.spec[k];
+			        break;
+			    case "Colour":
+			        pf_colour=result_json.car_specs.spec[k];
+			        break;
+			}
+	
+ 		}	
+		
+	//End Pre-Fill Attributes
+	
+	
+    car_tml+="<table class='eltable3-center tbldesktop' style='width:100%;'>"+
+     		"<tr>"+
+       "<th height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+      "</tr> "+
+      "<tr>"+
+        "<td height='30'  class='elmain tdwidth' >Engine:  <span class='tblspan100'></span>"+pf_litre+" "+pf_turbo+" "+pf_cylinder+"</td>"+
+	"<td rowspan='8' class='elmain-center tblpadding'> "; 
+  		
+		//Add Upgrades (if any)
+		for(var k=0;k<result_json.tune_options.name.length;k++)
+	 		{
+				if(result_json.tune_options.name[k]!="")
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+					car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+					car_tml+=result_json.tune_options.name[k];
+					for(var l=40;l>result_json.tune_options.name[k].length;l--)
+						car_tml+= "&nbsp; "
+					car_tml+="</p>";
+					//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+				}
+				else
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+					//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+				}
+			
+	 		}
+  		//End Add Upgrades 
+			
+			car_tml+="</td>";
+			car_tml+="</tr>";
+			
+			
+			
+     car_tml+="<tr>"+
+        "<td height='30' class='elmain'>Max. Power:<span class='tblspan70'></span>"+pf_power+"</td>"+
+
+
+      "</tr>"+
+     "<tr>"+
+        "<td height='30' class='elmain'>Top Speed:<span class='tblspan77'></span>"+pf_speed+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Acceleration:<span class='tblspan65'></span>0 to 100 km/h in "+pf_acceleration+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Chassis:<span class='tblspan95'></span>"+pf_chassis+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></span>"+pf_aerodynamics.substring(0, 53)+"<br> <span class='tblspan146'></span>"+pf_aerodynamics.substring(53, 100)+"</td>"+
+     " </tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Colour:<span class='tblspan99'></span>"+pf_colour+"</td>"+
+      "</tr>"+
+    "</table>"+
+ 
+  	  "<table class='eltable3-center tblmobile' style='width:100%;'>"+
+  	   "<tr>"+
+  	     "<th colspan='2' height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+		 
+
+  	    "</tr>"+ 
+  	    "<tr>"+
+  	      "<td height='30'  class='elmain tdwidth' >Engine: </td>"+
+  		  "<td class='elmain-center tdwidth'> "+pf_litre+" "+pf_turbo+"<br>"+pf_cylinder+"</td>"+
+  	"</td>"+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Max. Power:</td>"+
+  "<td class='elmain-center'> "+pf_power+"</td>"+
+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Top Speed:</td>"+
+  		  "<td class='elmain-center'> "+pf_speed+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Acceleration:</td>"+
+  		  "<td class='elmain-center'> 0 to 100 km/h in "+pf_acceleration+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Chassis:</td>"+
+  		  "<td class='elmain-center'> "+pf_chassis+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></td>"+
+  		  "<td class='elmain-center'> "+pf_aerodynamics.substring(0, 53)+"<br>  "+pf_aerodynamics.substring(53, 100)+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Colour:</td>"+
+  		  "<td class='elmain-center'> "+pf_colour+"</td>"+
+  	    "</tr>"+
+  	  "</table>	"+
+	  
+	 
+  	    "<table class='eltable3-center tblmobile' style='margin-left:10%;width:100%;'>"+
+  			 "<br>"+
+  	     "<tr>"+
+  	  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+  	      "</tr>"+ 
+  	      "<tr>"+
+	      
+			"<td class='elmain-center tblpadding' >";
+			//Add Upgrades (if any)
+			for(var k=0;k<result_json.tune_options.name.length;k++)
+		 		{
+					if(result_json.tune_options.name[k]!="")
+					{
+						car_tml+="<p class='elmain'><img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+						car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+						car_tml+=result_json.tune_options.name[k];
+						//for(var l=30;l>result_json.tune_options.name[k].length;l--)
+						//	car_tml+= "&nbsp; "
+						car_tml+="</p>";
+						//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+					}
+					else
+					{
+						car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+						//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+					}
+			
+		 		}
+			car_tml+="</td>"+"</tr>"+
+    "</table>";
+	
+	
+	 	
+	
+	 car_tml+="    <p></p>";
+	 car_tml+="    </div>";
+     car_tml+=" </div>   ";
+	
+ 	
+	
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+	
+	
+	
+}
+
+//Sister Function:
+function DisplayDealerAffiliateCarView(result_json,code){
+	
+	var car_tml="";
+	
+	console.log("DisplayDealerCarView");
+	console.log(result_json);
+	//$("#lambos").html("<p>"+JSON.stringify(result_json)+"</p>");
+	
+	
+	car_tml+=" <div class='row'>";
+	
+	car_tml+="<div style='display:block;margin:auto'>";
+	car_tml+="<svg  width='"+gwidth_carView+"' height='"+gheight_carView+"'><rect id='bg' x='0' y='0' width='"+gwidth_carView+"' height='"+gheight_carView+"' fill='blue' opacity='0' />";
+
+	car_tml+="<image style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"' xlink:href='"+result_json.svg_components.base+"'/>";
+
+	//car_tml+="<image xlink:href="+result_json[i].svg_components.base+" style='display:block' width='"+gwidth+"' height='"+gheight+"'>";
+	for(var j=0;j<result_json.svg_components.options.length;j++)
+		{
+		car_tml+="<image id='"+result_json.svg_components.ids[j]+"' style='display:block' width='"+gwidth_carView+"' height='"+gheight_carView+"'"+
+		"xlink:href='"+result_json.svg_components.options[j]+"'/>";
+	
+		}
+	car_tml+="</svg>";	
+	car_tml+="<p class='elmain2-center'>Serial No.: "+result_json.number+"</p><br><br>";
+	car_tml+="   </div>";
+	
+	
+	
+	car_tml+=" <div class='col-lg-12'>";
+	
+	//Display price
+	
+    car_tml+="<p class='elmain2-center' id='dealerPrice' > Price: "+web3.fromWei(result_json.price,'ether')+" ETH</p>";
+	//car_tml+="<p class='elmain2-center' id='dealerPrice' > Referral-Code: <input type='' placeholder='' id='buyReferral_"+result_json.token_id+"' />"+"</p>";
+	 //car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCarReferral("+result_json.token_id+","+result_json.price+","+result_json.token_id+")'>Buy Car</button>";
+	 car_tml+="<p class='elmain-center'><button class='btn btn-secondary elbutton2' style='color:black' role='button' id='buyButton_"+result_json.token_id+"' onclick='buyCarReferral("+result_json.token_id+","+result_json.price+","+code+")'>Buy Car</button>";
+	 car_tml+="<br><br><br>";
+	
+	
+	
+	
+	//Pre-Fill Attributes
+	var pf_speed,pf_power,pf_acceleration,pf_cylinder,pf_litre,pf_turbo,pf_chassis,pf_aerodynamics="",pf_colour;
+	for(var k=0;k<result_json.car_specs.name.length;k++)
+ 		{
+			switch (result_json.car_specs.name[k]) {
+			    case "Speed":
+			        pf_speed=result_json.car_specs.spec[k];
+			        break;
+			    case "Power":
+			        pf_power=result_json.car_specs.spec[k];
+			        break;
+			    case "Acceleration":
+			        pf_acceleration=result_json.car_specs.spec[k];
+			        break;
+			    case "Cylinder":
+			        pf_cylinder=result_json.car_specs.spec[k];
+			        break;
+			    case "Litre":
+			        pf_litre=result_json.car_specs.spec[k];
+			        break;
+			    case "Turbo":
+			        pf_turbo=result_json.car_specs.spec[k];
+			        break;
+			    case "Chassis":
+			        pf_chassis=result_json.car_specs.spec[k];
+			        break;
+			    case "Aerodynamics":
+			        pf_aerodynamics=result_json.car_specs.spec[k];
+			        break;
+			    case "Colour":
+			        pf_colour=result_json.car_specs.spec[k];
+			        break;
+			}
+	
+ 		}	
+		
+	//End Pre-Fill Attributes
+	
+	
+    car_tml+="<table class='eltable3-center tbldesktop' style='width:100%;'>"+
+     		"<tr>"+
+       "<th height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+      "</tr> "+
+      "<tr>"+
+        "<td height='30'  class='elmain tdwidth' >Engine:  <span class='tblspan100'></span>"+pf_litre+" "+pf_turbo+" "+pf_cylinder+"</td>"+
+	"<td rowspan='8' class='elmain-center tblpadding'> "; 
+  		
+		//Add Upgrades (if any)
+		for(var k=0;k<result_json.tune_options.name.length;k++)
+	 		{
+				if(result_json.tune_options.name[k]!="")
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+					car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+					car_tml+=result_json.tune_options.name[k];
+					for(var l=40;l>result_json.tune_options.name[k].length;l--)
+						car_tml+= "&nbsp; "
+					car_tml+="</p>";
+					//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+				}
+				else
+				{
+					car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+					//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+				}
+			
+	 		}
+  		//End Add Upgrades 
+			
+			car_tml+="</td>";
+			car_tml+="</tr>";
+			
+			
+			
+     car_tml+="<tr>"+
+        "<td height='30' class='elmain'>Max. Power:<span class='tblspan70'></span>"+pf_power+"</td>"+
+
+
+      "</tr>"+
+     "<tr>"+
+        "<td height='30' class='elmain'>Top Speed:<span class='tblspan77'></span>"+pf_speed+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Acceleration:<span class='tblspan65'></span>0 to 100 km/h in "+pf_acceleration+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Chassis:<span class='tblspan95'></span>"+pf_chassis+"</td>"+
+      "</tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></span>"+pf_aerodynamics.substring(0, 53)+"<br> <span class='tblspan146'></span>"+pf_aerodynamics.substring(53, 100)+"</td>"+
+     " </tr>"+
+      "<tr>"+
+        "<td height='30' class='elmain'>Colour:<span class='tblspan99'></span>"+pf_colour+"</td>"+
+      "</tr>"+
+    "</table>"+
+ 
+  	  "<table class='eltable3-center tblmobile' style='width:100%;'>"+
+  	   "<tr>"+
+  	     "<th colspan='2' height='70'  class='elmain2-center' >S P E C I F I C A T I O N S</th>"+
+		 
+
+  	    "</tr>"+ 
+  	    "<tr>"+
+  	      "<td height='30'  class='elmain tdwidth' >Engine: </td>"+
+  		  "<td class='elmain-center tdwidth'> "+pf_litre+" "+pf_turbo+"<br>"+pf_cylinder+"</td>"+
+  	"</td>"+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Max. Power:</td>"+
+  "<td class='elmain-center'> "+pf_power+"</td>"+
+
+  	    "</tr>"+
+  	   "<tr>"+
+  	      "<td height='30' class='elmain'>Top Speed:</td>"+
+  		  "<td class='elmain-center'> "+pf_speed+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Acceleration:</td>"+
+  		  "<td class='elmain-center'> 0 to 100 km/h in "+pf_acceleration+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Chassis:</td>"+
+  		  "<td class='elmain-center'> "+pf_chassis+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Aerodynamics:<span class='tblspan53'></td>"+
+  		  "<td class='elmain-center'> "+pf_aerodynamics.substring(0, 53)+"<br>  "+pf_aerodynamics.substring(53, 100)+"</td>"+
+  	    "</tr>"+
+  	    "<tr>"+
+  	      "<td height='30' class='elmain'>Colour:</td>"+
+  		  "<td class='elmain-center'> "+pf_colour+"</td>"+
+  	    "</tr>"+
+  	  "</table>	"+
+	  
+	 
+  	    "<table class='eltable3-center tblmobile' style='margin-left:10%;width:100%;'>"+
+  			 "<br>"+
+  	     "<tr>"+
+  	  	  "<th height='70' class='elmain2-center'>U P G R A D E S</th>"+
+
+  	      "</tr>"+ 
+  	      "<tr>"+
+	      
+			"<td class='elmain-center tblpadding' >";
+			//Add Upgrades (if any)
+			for(var k=0;k<result_json.tune_options.name.length;k++)
+		 		{
+					if(result_json.tune_options.name[k]!="")
+					{
+						car_tml+="<p class='elmain'><img src='img/upgrade.png' style='width:25px;height:25px'/>";
+					
+						car_tml+= "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";	
+						car_tml+=result_json.tune_options.name[k];
+						//for(var l=30;l>result_json.tune_options.name[k].length;l--)
+						//	car_tml+= "&nbsp; "
+						car_tml+="</p>";
+						//car_tml+="Description: "+result_json.tune_options.description[k]+"</p>";
+					}
+					else
+					{
+						car_tml+="<p class='elmain'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;No Upgrades yet.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>";
+					
+						//car_tml+=" ---------------------- No Upgrades yet! ----------------------";
+					}
+			
+		 		}
+			car_tml+="</td>"+"</tr>"+
+    "</table>";
+	
+	
+	 	
+	
+	 car_tml+="    <p></p>";
+	 car_tml+="    </div>";
+     car_tml+=" </div>   ";
+	
+ 	
+	
+	
+	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+	
+	
+	
+}
+
+function DisplayCannotFind(){
+	
+	var car_tml="";
+	console.log("DisplayCannotFind");
+	car_tml+=" <div class='row'>";
+	car_tml+=" <div class='col-lg-12'>";
+	 car_tml+="    <p class='elmain-center'>Sorry we can not find the car you are looking for...</p>";
+	 car_tml+="    </div>";
+ 	console.log(car_tml);
+	$("#profileView").html(car_tml);
+	
+}

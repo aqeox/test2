@@ -1,0 +1,109 @@
+
+var attributesDB = [];
+//Attributes that are non visual (they can apply for more than one model)
+attributesDB[0] = { name: 'Speed', description: 'km/h', decimals: 0};
+attributesDB[1] = { name: 'Power', description: 'hp', decimals: 0};
+attributesDB[2] = { name: 'Acceleration', description: '/ sec', decimals: 2};
+attributesDB[3] = { name: 'Cylinder', description: 'V', decimals: 0};
+attributesDB[4] = { name: 'Litre', description: 'litre', decimals: 1};
+attributesDB[5] = { name: 'Turbo', description: '', decimals: 0};
+attributesDB[6] = { name: 'Chassis', description: '', decimals: 0};
+attributesDB[7] = { name: 'Aerodynamics', description: '', decimals: 0};
+attributesDB[8] = { name: 'Colour', description: '', decimals: 0};
+
+
+//Attributes that are visual (they can apply for only one model)
+var visualAttributesDB = [];
+
+//VITALIK
+visualAttributesDB[0] = { attPos: 20,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[], changeValue:[]}, name: 'LED wheel rings', description: 'LED wheel rings', path: 'svg-vitalik/vitalik_neonring.png',id: 'vitalik_neon',pos:'front' ,visible: true };
+visualAttributesDB[1] = { attPos: 21,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[0,2], changeValue:[-25,0.1] }, name: 'Rear Wing extension', description: 'Rear wing extension', path: 'svg-vitalik/vitalik_wing.png',id: 'vitalik_wing',pos:'front',visible: true };
+visualAttributesDB[2] = { attPos: 22,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[35,50,-0.2] }, name: 'Roof vent', description: 'Roof vent', path: 'svg-vitalik/vitalik_roofscoop.png',id: 'vitalik_roofscoop',pos:'front',visible: true };
+
+//SATOSHI
+visualAttributesDB[3] = { attPos: 20,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[20,20,-0.1] }, name: 'Side vents', description: 'Side vents', path: 'svg-satoshi/satoshi_sidevents.png',id: 'satoshi_sidevents',pos:'front',visible: true };
+visualAttributesDB[4] = { attPos: 21,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[25,35,-0.15] }, name: 'Hood scoops', description: 'Hood scoops', path: 'svg-satoshi/satoshi_hoodvents.png',id: 'satoshi_hoodvents',pos:'front',visible: true };
+visualAttributesDB[5] = { attPos: 22,attRange: 1, model: 2, value: 0, impactAttributes: { attribute:[], changeValue:[] }, name: 'Rear Wing', description: 'Type of rear wing', path: 'svg-satoshi/satoshi_rearwing.png',id: 'satoshi_rearwing',pos:'back',visible: true };
+visualAttributesDB[6] = { attPos: 22,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[0,2], changeValue:[-25,0.1] }, name: 'Large Rear Wing', description: 'Large rear wing', path: 'svg-satoshi/satoshi_largerearwing.png',pos:'back',id: 'satoshi_largerearwing',visible: true };
+
+//MONERA
+visualAttributesDB[7] = { attPos: 20,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[35,50,-0.2]}, name: 'Side vents', description: 'Side vent', path: 'svg-monera/monera_sidevents.png',id: 'monera_sidevent',pos:'front' ,visible: true };
+visualAttributesDB[8] = { attPos: 21,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[0,2], changeValue:[-25,0.1] }, name: 'Rear Wing', description: 'Rear wing', path: 'svg-monera/monera_rearwing.png',id: 'monera_rearwing',pos:'front',visible: true };
+visualAttributesDB[9] = { attPos: 22,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[], changeValue:[] }, name: 'K.I.T.T. scanner', description: 'K.I.T.T. scanner', path: 'svg-monera/monera_scanner.png',id: 'monera_scanner',pos:'front',visible: true };
+
+//CHARLIE
+visualAttributesDB[10] = { attPos: 20,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[], changeValue:[] }, name: 'Front spoiler upgrade', description: 'Front spoiler upgrade', path: 'svg-charlie/charlie_frontsplitter.png',id: 'charlie_frontsplitter',pos:'front' ,visible: true };
+visualAttributesDB[11] = { attPos: 21,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[0,1], changeValue:[15,20] }, name: 'Hood scoops', description: 'Hood scoops', path: 'svg-charlie/charlie_hoodvents.png',id: 'charlie_hoodvents',pos:'front',visible: true };
+visualAttributesDB[12] = { attPos: 22,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[2], changeValue:[0.2] }, name: 'Rear wing', description: 'Rear wing', path: 'svg-charlie/charlie_rearwing.png',id: 'charlie_rearwing',pos:'back',visible: true };
+visualAttributesDB[13] = { attPos: 23,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[], changeValue:[] }, name: 'Front Lips', description: 'Front Lips', path: 'svg-charlie/charlie_frontlips.png',id: 'charlie_frontlips',pos:'front',visible: true };
+
+//ONE
+visualAttributesDB[14] = { attPos: 20,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[], changeValue:[] }, name: 'extended Front splitter', description: 'extended Front splitter', path: 'svg-one/one_frontsplitter.png',id: 'one_frontsplitter',pos:'front' ,visible: true };
+visualAttributesDB[15] = { attPos: 21,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1], changeValue:[50,50] }, name: 'Hood scoops', description: 'Hood scoops', path: 'svg-one/one_hoodvents.png',id: 'one_hoodvents',pos:'front',visible: true };
+visualAttributesDB[16] = { attPos: 22,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[2], changeValue:[0.1] }, name: 'Rear wing "Matrix"', description: 'Rear wing "Matrix"', path: 'svg-one/one_rearwing.png',id: 'one_rearwing',pos:'back',visible: true };
+
+//T-REX NOT READY
+/*
+visualAttributesDB[17] = { attPos: 20,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[], changeValue:[] }, name: 'extended Front splitter', description: 'extended Front splitter', path: 'svg-one/one_frontsplitter.png',id: 'one_frontsplitter',pos:'front' ,visible: true };
+visualAttributesDB[18] = { attPos: 21,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1], changeValue:[50,50] }, name: 'Hood scoops', description: 'Hood scoops', path: 'svg-one/one_hoodvents.png',id: 'one_hoodvents',pos:'front',visible: true };
+visualAttributesDB[19] = { attPos: 22,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[2], changeValue:[0.1] }, name: 'Rear wing "Matrix"', description: 'Rear wing "Matrix"', path: 'svg-one/one_rearwing.png',id: 'one_rearwing',pos:'back',visible: true };
+*/
+
+var nonVisualAttributesDB = [];
+//Attributes that are non visual (they can apply for more than one model)
+//VITALIK
+nonVisualAttributesDB[0] = { attPos: 10,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[35,99,-0.3] }, name: 'Modified exhaust system race', description: 'Modified exhaust system race',visible: true };
+nonVisualAttributesDB[1] = { attPos: 11,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[1,2], changeValue:[75,-0.1] }, name: 'ECU remap', description: 'ECU remap',visible: true };
+nonVisualAttributesDB[2] = { attPos: 12,attRange: 1, model: 1, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[25,85,-0.2] }, name: 'Upgrade intercooler', description: 'Upgrade intercooler',visible: true };
+
+//SATOSHI
+nonVisualAttributesDB[3] = { attPos: 10,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[20,50,-0.2] }, name: 'Modified exhaust system Race', description: 'tbd',visible: true };
+nonVisualAttributesDB[4] = { attPos: 11,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[1,2], changeValue:[35,-0.1] }, name: 'Improved engine electronic', description: 'tbd',visible: true };
+nonVisualAttributesDB[5] = { attPos: 12,attRange: 1, model: 2, value: 1, impactAttributes: { attribute:[0,1,2,4], changeValue:[30,100,-0.3,0.2] }, name: 'stroker kit "devil"', description: 'tbd',visible: true };
+
+//MONERA
+nonVisualAttributesDB[6] = { attPos: 10,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[20,50,-0.3] }, name: 'high-performance exhaust set-up', description: 'tbd',visible: true };
+nonVisualAttributesDB[7] = { attPos: 11,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[1,2], changeValue:[35,-0.2] }, name: 'electronic power-upgrade', description: 'tbd',visible: true };
+nonVisualAttributesDB[8] = { attPos: 12,attRange: 1, model: 3, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[15,75,-0.4] }, name: 'add turbo charger "fluffy ponies"', description: 'tbd',visible: true };
+
+//CHARLIE
+nonVisualAttributesDB[9] = { attPos: 10,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[20,40,-0.2] }, name: 'high-performance exhaust set-up', description: 'high-performance exhaust set-up',visible: true };
+nonVisualAttributesDB[10] = { attPos: 11,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[1,2], changeValue:[50,-0.2] }, name: 'upgrade electric engines "Lightening"', description: 'upgrade electric engines "Lightening"',visible: true };
+nonVisualAttributesDB[11] = { attPos: 12,attRange: 1, model: 4, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[20,80,-0.2] }, name: 'add turbo charger "Quicksilver"', description: 'add turbo charger "Quicksilver"',visible: true };
+
+//ONE
+nonVisualAttributesDB[12] = { attPos: 10,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[1,2], changeValue:[50,-0.1] }, name: 'dBFT chip tuning', description: 'dBFT chip tuning',visible: true };
+nonVisualAttributesDB[13] = { attPos: 11,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[30,70,-0.2] }, name: 'electronic power-upgrade', description: 'electronic power-upgrade',visible: true };
+nonVisualAttributesDB[14] = { attPos: 12,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[30,100,-0.3] }, name: 'add turbocharger "Byzantine"', description: 'add turbocharger "Byzantine"',visible: true };
+
+//T-REX
+/*
+nonVisualAttributesDB[12] = { attPos: 10,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[1,2], changeValue:[50,-0.1] }, name: 'dBFT chip tuning', description: 'dBFT chip tuning',visible: true };
+nonVisualAttributesDB[13] = { attPos: 11,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[30,70,-0.2] }, name: 'electronic power-upgrade', description: 'electronic power-upgrade',visible: true };
+nonVisualAttributesDB[14] = { attPos: 12,attRange: 1, model: 5, value: 1, impactAttributes: { attribute:[0,1,2], changeValue:[30,100,-0.3] }, name: 'add turbocharger "Byzantine"', description: 'add turbocharger "Byzantine"',visible: true };
+*/
+
+//List of all available models
+var modelsDB = [];
+modelsDB[0] = { model: 1, name: 'Vitalik', description: 'Vitalik Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[400,1000,2.7,16,8,"quad-turbocharged","Hybrid in Aluminum Magnesium fiber","Rear fixed wing integrated in body shape; side vents; front bodywork with lip spoiler","Ethereum grey-black"] }, 
+path: 'svg-vitalik/vitalik_base.png', visible: true };
+
+modelsDB[1] = { model: 2, name: 'Satoshi', description: 'Satoshi Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[450,815,2.5,12,6.7,"proof-of-work turbo charged","Carbon Fiber Monocoque","Adjustable rear wing; chin spoiler with splitter","Bitcoin-Orange"] }, 
+path: 'svg-satoshi/satoshi_base.png', visible: true };
+
+modelsDB[2] = { model: 3, name: 'Monera', description: 'Monera Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[390,800,2.9,12,6.7,"","Multi-layered Carbon Fiber","Stealth-design; chin spoiler with splitter","Monero-Stealth"] }, 
+path: 'svg-monera/monera_base.png', visible: true };
+
+
+modelsDB[3] = { model: 4, name: 'Charlie', description: 'Charlie Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[455,1000,2.4,8,4.8,"","Carbon Fiber","Air intakes with air ram function; chin spoiler with splitter","Litecoin-Silver"] }, 
+path: 'svg-charlie/charlie_base.png', visible: true };
+
+
+modelsDB[4] = { model: 5, name: 'One', description: 'One Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[350,900,2.4,6,3.5,"hybrid gas twin turbo dBFT engine","Carbon Fiber with advanced PMMA shield","Downforce and stability oriented design; air intakes front.","NEO"] }, 
+path: 'svg-one/one_base.png', visible: true };
+
+modelsDB[5] = { model: 6, name: 'CoinShares', description: 'CoinShares Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[430,1000,2.5,8,4.8,"Two electric engines","Blue Steel","Air intakes with air ram function.","CoinShares - Navy"] }, 
+path: 'svg-coinshares/coinshares_base.png', visible: true };
+
+modelsDB[6] = { model: 7, name: 'T-Rex', description: 'T-Rex Description', baseAttributes: { attribute:[0,1,2,3,4,5,6,7,8], value:[300,900,2.1,0,0,"Fuel cell electric java-mature Power Unit Token System","Carbon Fiber with advanced Beryllium compounds","Ultra-flat bodywork","Tron-Electric"] }, 
+path: 'svg-trex/trex_base.png', visible: true };
